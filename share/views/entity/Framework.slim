@@ -1,0 +1,12 @@
+- framework = entity
+
+h2.text-2xl.font-semibold.flex.items-center.gap-3
+  = framework
+  span.badge.badge-primary.badge-outline.text-xs Active: #{framework.version}
+
+p.mt-4.mb-6.max-w-3xl.text-slate-600= framework.description
+
+/ Corpus/versions pane (self-contained so it can be reloaded via HTMX)
+#corpus-pane
+  == render_entity_partial framework, :action, :corpus_pane
+

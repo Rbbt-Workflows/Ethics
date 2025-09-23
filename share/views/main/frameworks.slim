@@ -1,0 +1,11 @@
+h1.text-xl Frameworks
+
+section.mt-4
+  .grid.gap-4.grid-cols-1.md:grid-cols-2.lg:grid-cols-3
+    - Ethics::FRAMEWORKS.each do |framework|
+      - Framework.setup framework
+      a.block.card.w-90.bg-base-100.card-xs.shadow-sm.border.border-slate-200.p-4.hover:border-indigo-300.hover:shadow-sm href=entity_url(framework)
+        .card-body
+          h2.card-title.font-semibold.text-xl= framework
+          p.text-slate-500= framework.one_liner
+

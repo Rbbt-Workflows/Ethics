@@ -1,0 +1,16 @@
+- uc = entity
+- error = nil
+- begin
+  - Open.rm_rf UseCase.use_case_dir[uc]
+- rescue => e
+  - error = e.message
+
+- if error
+  .alert.alert-warning.mb-4
+    span= "Delete failed: #{error}"
+  a.btn.btn-ghost href=entity_url(uc) Back
+- else
+  .alert.alert-success.mb-4
+    span Deleted use case ‘#{uc}’
+  a.btn.btn-primary href="/main/use_cases" Back to list
+

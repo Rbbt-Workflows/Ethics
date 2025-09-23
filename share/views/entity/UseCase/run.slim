@@ -1,0 +1,9 @@
+ul
+  - Ethics::FRAMEWORKS.each do |framework|
+    - framework = Framework.setup framework
+    - version = framework.version
+    - evaluation = Evaluation.setup([framework, version, entity] * "·")
+    li.flex.items-center.justify-between.border-b.py-2
+      span= framework
+      a.btn.btn-xs href=entity_url(evaluation) Open
+

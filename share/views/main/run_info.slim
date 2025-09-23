@@ -1,0 +1,58 @@
+- require 'json'
+- # Expects a local `job` variable or a `params[:job]` job path to be provided.
+- job_param = (defined?(job) && job) || (params && params[:job])
+- the_job = nil
+- begin
+  - if job_param.is_a?(String)
+    - the_job = (defined?(Ethics) && Ethics.respond_to?(:task_job)) ? Ethics.task_job(job_param) : nil
+  - else
+    - the_job = job_param
+- rescue => e
+  - the_job = nil
+
+- if the_job.nil?
+  .p-4.text-slate-500 No job found
+- else
+  - st = the_job.respond_to?(:status) ? the_job.status.to_s : "unknown"
+  - started = (the_job.respond_to?(:start_time) && the_job.start_time) || (the_job.respond_to?(:mtime) && the_job.mtime) rescue nil
+  - started_s = started ? Time.at(started.to_i).strftime("%Y-%m-%d %H:%M:%S") : "—"
+  h3.text-lg.font-semibold.mb-2= File.basename(the_job.path.to_s)
+  .text-xs.text-slate-500.mb-3
+    span= "Status: "
+    strong.ml-1= st
+    br
+    span= "Started: "
+    strong.ml-1= started_s
+
+  == render_partial 'partial/markdown', markdown: job.load 
+  
+  .divider
+
+  - if the_job.respond_to?(:inputs) && the_job.inputs
+    .mb-3
+      h4.text-sm.font-medium Inputs
+      - begin
+        - inputs = IndiferentHash.setup(the_job.inputs.to_hash) rescue the_job.inputs
+        ul.text-sm.text-slate-700
+          - inputs.each do |k,v|
+            li
+              span.font-medium= "#{k}: "
+              span.ml-1= v.to_s[0,200]
+      - rescue => e
+        pre.text-sm= the_job.inputs.inspect
+  - if the_job.respond_to?(:info) && the_job.info
+    .mb-3
+      h4.text-sm.font-medium Info
+      pre.bg-slate-50.rounded.p-3.whitespace-pre-wrap.text-sm= the_job.info.to_s
+  - if the_job.respond_to?(:exception) && the_job.exception
+    .mb-3
+      h4.text-sm.font-medium.text-rose-600 Exception
+      pre.bg-rose-50.rounded.p-3.whitespace-pre-wrap.text-sm= the_job.exception.to_s
+  /- if the_job.respond_to?(:files_dir) && the_job.files_dir && Open.exists?(the_job.files_dir)
+    .mt-3
+      h4.text-sm.font-medium Files
+      p.text-sm.text-slate-500= the_job.files_dir.to_s
+      a.btn.btn-sm.btn-primary.mt-2 href=the_job.files_dir.to_s target='_blank' Open folder
+  .mt-4
+    a.btn.btn-ghost href="/main/runs" hx-get="/main/runs" hx-target="#runs-list" Back
+

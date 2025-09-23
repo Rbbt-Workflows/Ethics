@@ -1,0 +1,5 @@
+/* Minimal custom styles beyond Tailwind */
+:root { --brand: 79 70 229; } /* Indigo-600 */
+.markdown-body { }
+.htmx-indicator { display: none; }
+.htmx-request .htmx-indicator { display: inline-block; }

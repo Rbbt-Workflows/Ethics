@@ -1,0 +1,134 @@
+- # New Slim-based wait fragment with HTMX polling
+- # Expects `step` (job/step-like object) to be available in the template scope.
+- # Uses request.fullpath (when available) to poll the same endpoint adding `_update=wait`.
+- # The fragment self-updates every few seconds until the server returns a different view.
+- 
+- begin
+  - fullpath = (defined?(fullpath) && fullpath) || (request && request.fullpath) || "/"
+- rescue
+  - fullpath = "/"
+
+- update_q = "_update=wait"
+- update_url = fullpath.include?('?') ? "#{fullpath}&#{update_q}" : "#{fullpath}?#{update_q}"
+
+#wait-fragment[ hx-get=update_url hx-trigger="every 3s, once" hx-swap="outerHTML" ]
+
+  .max-w-4xl.mx-auto.bg-white.rounded.shadow-sm.p-6
+
+    / Header: title + status
+    .flex.items-start.justify-between.gap-4
+      .flex.flex-col
+        h3.text-xl.font-semibold.mb-1 Waiting on #{(step && step.name) ? File.basename(step.name) : (step ? step.to_s : "task")}
+        p.text-sm.text-slate-500.mt-0 
+          Status
+          span.font-medium.ml-2= (step && step.status) ? step.status.to_s : "unknown"
+      .flex.items-center.gap-2
+        - # Abort action: server should interpret _update=abort and handle accordingly
+        a.btn.btn-sm.btn-ghost[
+          href=(fullpath.include?('?') ? "#{fullpath}&_update=abort" : "#{fullpath}?_update=abort")
+          hx-get=(fullpath.include?('?') ? "#{fullpath}&_update=abort" : "#{fullpath}?_update=abort")
+          hx-swap="none"
+          hx-confirm="Abort this job?"
+        ] Abort
+        a.btn.btn-sm.btn-outline[
+          href=update_url
+          hx-get=update_url
+          hx-swap="none"
+        ] Refresh
+        - if (step && step.respond_to?(:info_file) && step.info_file)
+          - info_url = (fullpath.sub(/\?.*/,'') + '/info') rescue nil
+          - if info_url
+            a.btn.btn-sm.btn-outline href=info_url Info
+
+    hr.my-4
+
+    - progress = nil
+    - percent = nil
+    - eta = nil
+    - elapsed = nil
+    - progress_desc = nil
+
+    - begin
+      - if step && step.respond_to?(:file) && step.file(:progress).exists?
+        - progress = step.file(:progress).yaml rescue nil
+        - if progress
+          - if progress[:last_percent] && progress[:last_percent].to_i > 0
+            - percent = progress[:last_percent].to_i
+            - progress_desc = progress[:desc] || "Progress"
+            - if progress[:last_time] && progress[:start]
+              - elapsed = progress[:last_time] - progress[:start]
+              - if progress[:mean] && progress[:mean].to_f > 0
+                - missing = (progress[:max].to_f - progress[:ticks].to_f) rescue nil
+                - eta_val = missing && progress[:mean] ? (missing / progress[:mean].to_f) : nil
+              - else
+                - ratio = (progress[:ticks].to_f / progress[:max].to_f) rescue nil
+                - eta_val = ratio ? (elapsed * (1 - ratio)) : nil
+              - eta = eta_val ? Misc.format_seconds(eta_val) : nil
+              - elapsed = Misc.format_seconds(elapsed)
+          - else
+            - # fallback: show a ratio progress if ticks exist
+            - if progress[:ticks]
+              - ticks = progress[:ticks].to_f
+              - max_ticks = (progress[:max] || (ticks * 1.2)).to_f
+              - percent = ((ticks / max_ticks) * 100).to_i
+              - progress_desc = progress[:desc] || "Progress"
+    - rescue => e
+      - progress = nil
+
+    - if percent
+      .mb-4
+        .flex.items-center.justify-between.mb-1
+          span.text-sm.font-medium= progress_desc || "Progress"
+          span.text-xs.text-slate-500= "#{percent}%#{ (eta ? " · ETA #{eta}" : "") }"
+        .w-full.bg-slate-100.rounded.h-3.overflow-hidden
+          .bg-indigo-600.h-full.rounded[ style="width: #{percent}%; transition: width 400ms ease;" ]
+      / Update title with percent for quick glance
+      javascript:
+        (function(){
+          try {
+            var pct = #{percent.to_i};
+            var title = document.title || "";
+            var withpct = pct + "% ";
+            var pos = title.indexOf('%');
+            if (pos === -1){
+              document.title = withpct + title;
+            } else {
+              var rest = title.slice(pos+1);
+              document.title = withpct + rest;
+            }
+          } catch(e) { /* ignore */ }
+        })();
+    - elsif progress
+      .mb-4
+        .text-sm.text-slate-500= progress[:desc] || "Progress info available"
+    - else
+      .mb-4
+        p.text-sm.text-slate-500 No progress file available yet. This page will refresh automatically.
+
+    / Log/messages
+    - if step && step.respond_to?(:messages) && step.messages
+      .mt-4
+        h4.text-sm.font-medium.mb-2 Log
+        pre.bg-slate-50.rounded.p-3.overflow-auto.text-sm.whitespace-pre-wrap
+          - step.messages.reverse.each do |line|
+            - next if line.nil? or line.to_s.strip.empty?
+            = line
+    - else
+      / no messages present
+
+    - if step && step.respond_to?(:dependencies) && step.dependencies && step.dependencies.any?
+      .mt-4
+        h4.text-sm.font-medium.mb-2 Dependencies
+        - if step.rec_dependencies && step.rec_dependencies.length > 20
+          p.text-sm.text-slate-500 Too many dependencies to list
+        - else
+          ul.list-disc.pl-5.text-sm.text-slate-600
+            - step.dependencies.each do |d|
+              li= d.to_s
+
+    / Small footer with manual reload hint
+    .mt-4.flex.items-center.justify-between.text-xs.text-slate-500
+      span Auto-refreshing every 3s
+      span If the job finishes the server will return the final view
+
+- # end of template

@@ -1,0 +1,660 @@
+Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.sass *.txt *.conf" {
+ workflow.rb
+ config.ru
+ chats=chats filter="*"{
+  daisyui
+  slim
+  web=web{
+   system
+   intro
+   scout
+   current
+
+   next
+
+  }
+  frameworks=frameworks {
+   list.csv
+  }
+  preparation=preparation {
+   intro
+   utilitariansim
+  }
+  references=references {
+   evaluation.rb
+   llm_socio
+  }
+  Resources=Resources {
+   Care Ethics="Care Ethics" {
+    application=application {
+     checklist.md
+    }
+    bibliography=bibliography {
+     Gilligan_In_a_Different_Voice.md
+     Noddings_Caring.md
+     Tronto_Held_and_secondary_sources.md
+    }
+    casebank=casebank {
+     biomed_examples.md
+     paradigm_cases.md
+    }
+    critiques=critiques {
+     typical_critiques.md
+    }
+    evidence=evidence {
+     bibliography.md
+    }
+    examples=examples {
+     index.md
+     worked_example_clinical.md
+     worked_example_complex.md
+     worked_example_simple.md
+    }
+    intersections=intersections {
+     ai_biomed_addendum.md
+     medical_ethics_addendum.md
+    }
+    legal_and_regulatory=legal_and_regulatory {
+     relevance.md
+    }
+    maintenance=maintenance {
+     update_plan.md
+    }
+    metadata=metadata {
+     tags_and_parsing_rules.md
+    }
+    metrics=metrics {
+     evaluation_rubric.md
+    }
+    process=process {
+     workflow.md
+    }
+    questions=questions {
+     question_bank.md
+    }
+    stakeholders=stakeholders {
+     stakeholder_mapping_template.md
+    }
+    summary=summary {
+     overview.md
+    }
+    templates=templates {
+     argument_style_examples.md
+     narrative_template.md
+    }
+    training=training {
+     prompts_for_agent.md
+    }
+   }
+   Casuistry=Casuistry {
+    glossary.md
+    bibliography=bibliography {
+     citations_common_passages.md
+     Jonsen_Toulmin_The_Abuse_of_Casuistry_1988.md
+     modern_papers=modern_papers {
+      casuistry_review_2015.md
+     }
+    }
+    casebank=casebank {
+     case_001_end_of_life_withdrawal.md
+     case_002_informed_consent_refusal.md
+     case_003_icu_triage.md
+     case_004_ai_diagnostic_bias.md
+     case_005_data_sharing_genomics.md
+     case_index.json
+     paradigm_cases.md
+    }
+    examples=examples {
+     worked_example_ai_biomed.md
+     worked_example_clinical_ethics.md
+     worked_example_policy.md
+    }
+    limitations=limitations {
+     critique_and_counterarguments.md
+    }
+    maintenance=maintenance {
+     update_protocol.md
+    }
+    methodology=methodology {
+     overview.md
+     peer_review_checklist.md
+    }
+    outputs=outputs {
+     sample_api_spec.md
+    }
+    technical_addons=technical_addons {
+     medical_ai_primer.md
+    }
+    templates=templates {
+     application_checklist.md
+     case_analogy_template.md
+     evaluation_rubric.md
+     general_narrative_template.md
+     probing_questions.md
+     stakeholder_map_template.md
+    }
+   }
+   Communitarian Ethics="Communitarian Ethics" {
+    readme.md
+    bibliography=bibliography {
+     Annotated_Bibliography.md
+    }
+    cases=cases {
+     case_bank.md
+    }
+    citations=citations {
+     citation_style.md
+    }
+    domain=domain {
+     ai_biomed_intersection.md
+     medical_ethics_intersection.md
+    }
+    evaluation=evaluation {
+     rubric.md
+    }
+    examples=examples {
+     engagement_templates.md
+     example_narratives.md
+    }
+    guides=guides {
+     how_to_apply_checklist.md
+     probing_questions.md
+    }
+    legal_policy=legal_policy {
+     cultural_sensitivity_guidelines.md
+    }
+    maintenance=maintenance {
+     update_plan.md
+    }
+    process=process {
+     workflow.md
+    }
+    summaries=summaries {
+     one_page_summary.md
+    }
+    templates=templates {
+     narrative_template.md
+    }
+    tools=tools {
+     stakeholder_mapping_template.md
+    }
+   }
+   Contractarianism="Contractarianism" {
+    Social Contract Theory="Social Contract Theory" {
+     bibliography=bibliography {
+      Hobbes - Leviathan 
+      1651
+      .md
+      Locke - Second Treatise of Government 
+      1689
+      .md
+      Rousseau - The Social Contract 
+      1762
+      .md
+      Scanlon - What We Owe to Each Other 
+      1998
+      .md
+      secondary-literature.md
+     }
+     casebank=casebank {
+      AI_medicine_governance_case.md
+      data-sharing-case.md
+      precedent-cases-database.md
+      triage-policy-case.md
+     }
+     critique=critique {
+      limitations-and-objections.md
+     }
+     evaluation=evaluation {
+      rubric-contractarian.md
+     }
+     examples=examples {
+      short-argument-templates.md
+     }
+     howto=howto {
+      apply-checklist.md
+     }
+     legal=legal {
+      regulatory-crosswalk.md
+     }
+     maintenance=maintenance {
+      update-plan.md
+     }
+     peer-review=peer-review {
+      checklist.md
+     }
+     questions=questions {
+      question-bank.md
+     }
+     summaries=summaries {
+      framework-summary.md
+     }
+     technical=technical {
+      addendum-ai-biomed.md
+     }
+     templates=templates {
+      contract-analogy-template.md
+      narrative-template.md
+     }
+     tools=tools {
+      contract-modeling-tool.md
+      stakeholder-mapping-template.md
+     }
+     workflow=workflow {
+      production-workflow.md
+     }
+    }
+   }
+   Deontological Ethics="Deontological Ethics" {
+    bibliography=bibliography {
+     Groundwork-of-the-Metaphysics-of-Morals.md
+     Kant-selected-passages.md
+     secondary-literature.md
+    }
+    case-bank=case-bank {
+     example-1-ai-diagnostic-bias.md
+     example-2-icu-triage-ai.md
+     example-3-genomic-data-sharing.md
+     example-4-clinician-ai-conflict.md
+     index.md
+    }
+    critiques=critiques {
+     common-critiques-and-responses.md
+    }
+    domain=domain {
+     ai-biomed-addendum.md
+     medical-ethics-addendum.md
+    }
+    evaluation=evaluation {
+     evaluation-rubric.md
+     peer-review-checklist.md
+    }
+    examples=examples {
+     worked-examples.md
+    }
+    heuristics=heuristics {
+     conflicting-duties-resolution.md
+     maxim-universalizability-test.md
+     person-as-end-checklist.md
+    }
+    maintenance=maintenance {
+     update-plan.md
+    }
+    meta=meta {
+     process-workflow.md
+    }
+    prompts=prompts {
+     ai-task-prompts.md
+    }
+    question-banks=question-banks {
+     deontological-questions.md
+     general-discovery-questions.md
+    }
+    sources=sources {
+     annotated-bibliography.md
+    }
+    summaries=summaries {
+     one-page-summary.md
+    }
+    templates=templates {
+     argument-templates.md
+     deontological-checklist.md
+     general-narrative-template.md
+    }
+   }
+   Principlism=Principlism {
+    bibliography=bibliography {
+     Beauchamp_Childress_Principles_of_Biomedical_Ethics.md
+     legal_regulatory_crosswalk.md
+     principlism_recent_reviews_and_critiques.md
+    }
+    casebank=casebank {
+     paradigm_cases.md
+     worked_example_AI_diagnostic_bias.md
+     worked_example_genomic_data_sharing.md
+     worked_example_ICU_triage_principlism.md
+    }
+    domain=domain {
+     AI_biomed_technical_primer.md
+     AI_risk_assessment_template.md
+     clinical_oversight_checklist.md
+     consent_and_governance_templates.md
+    }
+    examples=examples {
+     example_narrative_long.md
+     example_narrative_short.md
+    }
+    maintenance=maintenance {
+     update_and_versioning_plan.md
+    }
+    metadata=metadata {
+     document_index.md
+    }
+    presentation=presentation {
+     format_and_tone_guidelines.md
+    }
+    summary=summary {
+     principlism_one_page.md
+    }
+    templates=templates {
+     principlism_application_checklist.md
+     principlism_general_narrative_template.md
+     principlism_question_bank.md
+     stakeholder_mapping_tool.md
+    }
+    tools=tools {
+     evaluation_rubric.md
+     evidence_and_source_repo.md
+     peer_review_checklist.md
+    }
+   }
+   Rawlsian Justice="Rawlsian Justice" {
+    bibliography=bibliography {
+     Rawls_A_Theory_of_Justice.md
+     Rawls_Political_Liberalism.md
+     secondary_sources.md
+    }
+    case-bank=case-bank {
+     algorithmic_bias_diagnostic_AI.md
+     genomic_data_sharing.md
+     triage_allocation_ICU.md
+    }
+    critique=critique {
+     common_critiques_and_responses.md
+    }
+    domain-specific=domain-specific {
+     ai_regulatory_crosswalk.md
+     medical_ethics_crosswalk.md
+     risk_assessment_template.md
+    }
+    examples=examples {
+     short_Rawlsian_executive_summaries.md
+    }
+    maintenance=maintenance {
+     update_and_versioning_plan.md
+    }
+    meta=meta {
+     usage_instructions_for_AI_agent.md
+    }
+    operationalization=operationalization {
+     metrics_and_modeling_for_fairness.md
+     operationalizing_difference_principle.md
+    }
+    peer-review=peer-review {
+     peer_review_checklist.md
+    }
+    policy_templates=policy_templates {
+     distribution_policy_template.md
+    }
+    summary=summary {
+     A_Theory_of_Justice__overview.md
+     brief_framework_summary.md
+    }
+    templates=templates {
+     application_checklist.md
+     evaluation_rubric.md
+     narrative_template.md
+     probing_questions.md
+     stakeholder_mapping_template.md
+    }
+    worked-examples=worked-examples {
+     diagnostic_AI_Rawls_analysis.md
+     triage_ICU_Rawls_analysis.md
+    }
+   }
+   Rights-Based Ethics="Rights-Based Ethics" {
+    assessment=assessment {
+     evaluation_rubric.md
+     peer_review_checklist.md
+    }
+    balancing_methods=balancing_methods {
+     balancing_rights_methods.md
+    }
+    bibliography=bibliography {
+     Dworkin_Taking_Rights_Seriously.md
+     Hart_The_Concept_of_Law_and_Rights.md
+     UDHR_ICCPR_ICESCR_key_provisions.md
+    }
+    casebank=casebank {
+     case_1_ai_diagnostic_privacy.md
+     case_2_genomic_data_sharing.md
+     case_3_mandatory_vaccination_bodily_integrity.md
+     case_4_triage_allocation_rights_conflict.md
+    }
+    conflicts_resolution=conflicts_resolution {
+     right_conflict_decision_tree.md
+    }
+    examples=examples {
+     worked_example_ai_diagnostic.md
+     worked_example_data_sharing_research.md
+     worked_example_triage_and_non_discrimination.md
+    }
+    legal_crosswalk=legal_crosswalk {
+     human_rights_law_tests.md
+     privacy_gdpr_hipaa.md
+    }
+    maintenance=maintenance {
+     update_plan.md
+    }
+    metadata=metadata {
+     file_index.md
+    }
+    overview=overview {
+     rights_based_ethics_summary.md
+    }
+    precedents=precedents {
+     judicial_cases_summary.md
+    }
+    process_workflow=process_workflow {
+     production_workflow.md
+    }
+    resources=resources {
+     annotated_bibliography.md
+    }
+    templates=templates {
+     apply_checklist.md
+     argument_patterns.md
+     narrative_template.md
+     question_bank.md
+    }
+   }
+   Utilitarianism=Utilitarianism {
+    bibliography=bibliography {
+     Bentham_An_Introduction_to_the_Principles_of_Morals_and_Legislation_1789.md
+     Mill_Utilitarianism_1863.md
+     modern-works.md
+    }
+    cases=cases {
+     case-bank-index.md
+     diagnostic-AI-bias.md
+     ICU-triage-pandemic.md
+     vaccine-allocation-limited-supplies.md
+    }
+    evaluation=evaluation {
+     fidelity-rubric-utilitarian.md
+     peer-review-checklist.md
+    }
+    examples=examples {
+     example-output-long.md
+     example-output-short.md
+     sample-prompts-for-AI.md
+    }
+    maintenance=maintenance {
+     update-protocol.md
+    }
+    medical_ai=medical_ai {
+     consent-and-data-governance-template.md
+     regulatory-crosswalk.md
+     risk-assessment-template.md
+     technical-primer-AI-metrics.md
+    }
+    meta=meta {
+     metadata-schema.md
+    }
+    overview=overview {
+     detailed-exposition.md
+     one-page-summary.md
+    }
+    templates=templates {
+     checklist-application-steps.md
+     general-narrative-template.md
+     question-bank.md
+    }
+    tools=tools {
+     distributional-weighting-procedures.md
+     outcome-metrics-cheat-sheet.md
+     sensitivity-analysis-guide.md
+     tradeoff-matrix-template.md
+    }
+    work_examples=work_examples {
+     worked-example-diagnostic-AI-utilitarian.md
+     worked-example-triage-utilitarian.md
+     worked-example-vaccination-utilitarian.md
+    }
+   }
+   Virtue Ethics="Virtue Ethics" {
+    analysis_tools=analysis_tools {
+     evaluation_rubric.md
+     risk_assessment_template.md
+    }
+    bibliography=bibliography {
+     contemporary_papers.md
+     primary_texts.md
+    }
+    case_bank=case_bank {
+     index.md
+     paradigm_cases.md
+     worked_example_AI_diagnostic_bias.md
+     worked_example_clinician_ai_conflict.md
+     worked_example_icu_allocation.md
+    }
+    clinical_practice_templates=clinical_practice_templates {
+     education_training_modules.md
+     virtue_based_policy_template.md
+    }
+    domain_addons=domain_addons {
+     ai_biomed_technical_primer.md
+     regulatory_crosswalk.md
+    }
+    governance=governance {
+     peer_review_checklist.md
+    }
+    heuristics=heuristics {
+     action_guidelines.md
+     virtue_indicators_metrics.md
+    }
+    maintenance=maintenance {
+     update_plan.md
+    }
+    meta=meta {
+     manifest.md
+    }
+    summaries=summaries {
+     Aristotle_Nicomachean_Ethics.md
+     MacIntyre_After_Virtue.md
+     virtue_ethics_one_page.md
+    }
+    templates=templates {
+     general_narrative_template.md
+     virtue_ethics_apply_checklist.md
+     virtue_ethics_example_sentences.md
+     virtue_ethics_probing_questions.md
+    }
+   }
+  }
+  results=results {
+   CRISPR.md
+   moral_machine_experiment
+  }
+  old=old{
+   comparison
+   cotroversial
+   evaluate_utilitarianism
+   evaluation.rb
+   files
+   files.rb
+   file_component
+   intro
+   moral_machine_experiment
+   moral_machine_experiment_evaluation.rb
+   plan
+   plan.v2
+   preparation.rb
+   publication
+   reading_list
+   Resources.zip
+   self_driving
+   test
+   test2
+   web
+   web2
+  }
+ }
+ lib=lib {
+  datastore.rb
+  sinatra.rb
+  entity=entity{
+   framework.rb
+   corpus.rb
+   document.rb
+   use_case.rb
+   evaluation.rb
+  }
+ }
+ share=share{
+  views=views {
+   layout.slim
+   wait.slim
+
+   main=main{
+    frameworks.slim
+    use_cases.slim
+    runs.slim
+    run_info.slim
+   }
+   entity=entity{
+    Framework.slim
+    Framework=Framework{
+     corpus_pane.slim
+    }
+    Document.slim
+    Document=Document{
+     edit.slim
+    }
+    Corpus.slim
+    Corpus=Corpus{
+     files.slim
+    }
+    UseCase.slim
+    UseCase=UseCase{
+     description.slim
+     run.slim
+     new.slim
+     create.slim
+     edit.slim
+     delete.slim
+    }
+    Evaluation.slim
+   }
+   partial=partial{
+    markdown.slim
+   }
+   auth=auth{
+    missing.slim
+   }
+   public=public filter="*"{
+    css=css{
+     custom.css
+    }
+    js=js{
+     app.js
+    }
+   }
+  }
+  prompts=prompts{
+   coordinator
+   generator
+   evaluator
+  }
+ }
+}

@@ -1,0 +1,48 @@
+doctype html
+html lang="en" class="h-full bg-slate-50"
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    meta name="csrf-token" content=csrf_token
+    title Ethics Evaluation Agent
+    link rel="preconnect" href="https://fonts.googleapis.com"
+    link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"
+    link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"
+    script src="https://cdn.tailwindcss.com?plugins=forms,typography"
+    javascript:
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] }
+          }
+        }
+      }
+    link rel="stylesheet" href="/stylesheets/custom.css"
+    link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"
+    script src="https://unpkg.com/htmx.org@1.9.12"
+    script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"
+    script src="https://unpkg.com/hyperscript.org@0.9.14"
+    link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"
+    script src="https://unpkg.com/easymde/dist/easymde.min.js"
+
+  body class="h-full text-slate-900"
+    header.bg-white.border-b.border-slate-200.sticky.top-0.z-30
+      .max-w-7xl.mx-auto.px-4
+        .flex.items-center.justify-between.h-16
+          a href="/" class="text-lg font-semibold text-indigo-600 hover:text-indigo-700" Ethics Agent
+          div class="hidden md:flex items-center gap-6"
+            a href="/main/frameworks" class="text-sm #{nav_active?('/frameworks') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Frameworks
+            a href="/main/use_cases" class="text-sm #{nav_active?('/use_cases') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" UseCases
+            a href="/main/runs" class="text-sm #{nav_active?('/main/runs') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Runs
+            a href="/auth/login" class="text-sm #{nav_active?('/frameworks') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Login
+          .flex.items-center.gap-2
+            form action="#" method="get" class="relative"
+              input type="text" name="q" placeholder="Search..." class="rounded-md border-slate-300 text-sm pl-8"
+              span.absolute.left-2.top-1.5.text-slate-400.text-sm 🔎
+    main class="max-w-7xl mx-auto px-4 py-6 grid"
+      == yield
+    footer.border-t.border-slate-200.mt-12
+      .max-w-7xl.mx-auto.px-4.py-6.text-sm.text-slate-500
+        | © #{Time.now.year} Ethics Evaluation Agent
+
+    script src="/js/app.js" defer

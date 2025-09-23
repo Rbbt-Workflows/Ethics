@@ -1,0 +1,20 @@
+- require 'kramdown'
+- job = entity.job
+- job.run unless job.started?
+
+- case job.status.to_s
+- when 'done'
+    == render_partial 'partial/markdown', markdown: job.load
+- when 'error'
+  .alert.alert-error
+    pre= job.exception.inspect
+- else 
+
+  .alert.alert-info
+    span.font-medium Status:
+    span.ml-2= job.status
+
+.divider
+h3.text-sm.text-slate-500 Job info
+code.block.p-2.bg-slate-100.rounded.text-xs= job.path
+

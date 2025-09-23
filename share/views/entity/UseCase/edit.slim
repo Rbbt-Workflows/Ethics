@@ -1,0 +1,33 @@
+- uc = entity
+
+h2.text-xl.font-semibold.mb-4 Edit “#{uc}”
+
+.form-control
+  textarea#uc-editor.textarea.textarea-bordered.w-full.rows-20 data-markdown-editor="true" = uc.description
+
+.flex.justify-between.mt-4
+  a.btn.btn-ghost href=entity_url(uc) Cancel
+  .flex.gap-2
+    button.btn.btn-error.btn-outline[
+      hx-get=entity_url(uc, :action, :delete, _format: 'html')
+      hx-confirm="Delete this use case?"
+    ] Delete
+    button#uc-save.btn.btn-primary Save
+
+javascript:
+  (function(){
+    var btn = document.getElementById("uc-save");
+    var ta = document.getElementById("uc-editor");
+    if (!btn || !ta) return;
+    btn.addEventListener("click", function(){
+      var content = (ta._easymde ? ta._easymde.value() : ta.value);
+      // Use entity_property route to call UseCase.save(content)
+      fetch("#{entity_url(uc, :property, :save)}?args=" + encodeURIComponent(JSON.stringify([content])) + "&_format=json", {
+        method: "GET"
+      })
+      .then(function(r){ if(!r.ok) throw new Error("Save failed"); return r.json(); })
+      .then(function(){ window.toast("Saved"); })
+      .catch(function(e){ alert(e.message); });
+    });
+  })();
+

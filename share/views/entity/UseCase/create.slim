@@ -1,0 +1,31 @@
+- placeholder = entity
+- id = params[:id].to_s.strip
+- description = params[:description].to_s
+- created = false
+- error = nil
+- if id.empty?
+  - error = "Please provide an identifier"
+- else
+  - path = UseCase.use_case_dir[id]
+  - if Open.exists?(path)
+    - error = "A use case with id '#{id}' already exists"
+  - else
+    - begin
+      - Open.mkfiledir path
+      - Open.write path, description
+      - created = true
+    - rescue => e
+      - error = e.message
+
+- if error
+  .alert.alert-warning.mb-4
+    span= error
+  a.btn.btn-ghost href=entity_url(UseCase.setup('__new__'), :action, :new) Back
+- elsif created
+  - uc = UseCase.setup(id)
+  .alert.alert-success.mb-4
+    span Created use case ‘#{id}’
+  .flex.gap-2
+    a.btn.btn-primary href=entity_url(uc) View
+    a.btn.btn-outline href=entity_url(uc, :action, :edit) Edit
+

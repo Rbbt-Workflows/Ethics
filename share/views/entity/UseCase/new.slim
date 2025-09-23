@@ -1,0 +1,20 @@
+- placeholder = entity
+
+h2.text-xl.font-semibold.mb-4 New Use Case
+
+.card.bg-base-100.shadow
+  .card-body
+    form.space-y-4 method="get" action=entity_url(UseCase.setup('__new__'), :action, :create)
+      .form-control
+        label.label
+          span.label-text.font-medium Identifier (used as filename)
+        input.input.input-bordered.w-full type="text" name="id" placeholder="e.g. self_driving_safety_case" required=true
+        p.text-xs.text-slate-500.mt-1 Stored under #{UseCase.use_case_dir}
+      .form-control
+        label.label
+          span.label-text.font-medium Description (Markdown)
+        textarea.textarea.textarea-bordered.w-full rows="10" name="description" placeholder="Describe the use case…"
+      .flex.justify-end.gap-2
+        a.btn.btn-ghost href="/main/use_cases" Cancel
+        button.btn.btn-primary type="submit" Create
+
