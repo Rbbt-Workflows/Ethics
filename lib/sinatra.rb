@@ -88,7 +88,7 @@ class EthicsApp < Sinatra::Base
 
     triggers << status
 
-    headers['HX-Trigger'] = triggers
+    headers['HX-Trigger'] = triggers * ", "
   end
 
   register SinatraScoutBase
