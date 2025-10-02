@@ -5,6 +5,8 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
  postcss.config.js
  package.json
  chats=chats filter="*"{
+  select
+
   job
 
   changes
@@ -645,6 +647,7 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     Framework.slim
     Framework=Framework{
      corpora.slim
+     use_cases.slim
     }
     Corpus.slim
     Corpus=Corpus{

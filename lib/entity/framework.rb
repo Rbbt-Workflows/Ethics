@@ -71,6 +71,11 @@ Provide a one-line description of the framework #{self}
     Ethics.job(:prepare_version, prompt: prompt, framework: self, endpoint: endpoint, version: target)
   end
 
+  property :evaluate_use_case_job do |use_case, version,endpoint|
+    use_case = UseCase.setup use_case
+    Ethics.job(:evaluate, use_case: use_case.description, framework: self, endpoint: endpoint, version: version)
+  end
+
   property :check do
     corpora_dir
   end
