@@ -1,12 +1,20 @@
 - framework = entity
 
-h2.text-2xl.font-semibold.flex.items-center.gap-3
+h2.text-2xl.font-semibold.flex.items-center.gap-3.mb-8
   = framework
-  span.badge.badge-primary.badge-outline.text-xs Active: #{framework.version}
 
-p.mt-4.mb-6.max-w-3xl.text-slate-600= framework.description
+sass:
+  .editor-preview-full
+    height: 100%
+  .viewer
+    max-width: 100%
+    > *
+       padding: 16px
+       width: 100%
+    .table
+      width: auto
+      position: static
 
-/ Corpus/versions pane (self-contained so it can be reloaded via HTMX)
-#corpus-pane
-  == render_entity_partial framework, :action, :corpus_pane
+- version = framework.versions.first unless defined?(version) && framework.versions.include?(version)
 
+== entity_fragment framework, :action, :corpora, 'prepare_job, delete_version, new_version, clone_version, prepare_version_done', version: version

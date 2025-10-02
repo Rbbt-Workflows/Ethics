@@ -9,7 +9,7 @@ require 'entity/framework'
 module Ethics
   extend Workflow
 
-  FRAMEWORKS = Framework.setup Scout.share.frameworks.glob("*").map{ Framework.setup(it.basename) }
+  FRAMEWORKS = Framework.setup Scout.share.frameworks.glob("*").map{|it| Framework.setup(it.basename) }
   ENDPOINTS = Scout.etc.AI.glob('*').collect{|f| f.basename }
 
   input :use_case, :text, 'Description of use case to evaluate', nil, required:true 
@@ -85,11 +85,20 @@ The content description of the file is:
 
     files
   end
+
+  dep :prepare
+  input :version, :string, 'Target version', nil, required: true
+  task :prepare_version => :array do |version|
+    prepare = step(:prepare)
+    framework = Framework.setup(prepare.inputs[:framework])
+
+    Open.link prepare.files_dir, framework.corpus_dir(version)
+    prepare.files_dir.glob_names("*")
+  end
+
 end
 
 #require 'MODULE/tasks/basic.rb'
 
 #require 'rbbt/knowledge_base/MODULE'
 #require 'rbbt/entity/MODULE'
-
-iif Ethics.task_jobs :evaluate

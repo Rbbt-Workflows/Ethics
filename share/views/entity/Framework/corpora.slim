@@ -1,0 +1,67 @@
+- framework = entity
+- corpus = framework.corpus(version)
+- docs = corpus.documents
+
+.tabs.tablist.tabs-lift.mb-10.w-full.flex role='tablist'
+  input.tab type='radio' aria-label="Version #{version}" name='framework_controls'
+  .tab-content.p-6.bg-white.border-2.border-slate-200
+    ul.menu
+      - framework.versions.each do |version|
+        li.item.btn.btn-primary.btn-sm.mb-2
+          a(href=entity_url(framework, :entity, nil, version: version)) = version
+
+  input.tab role='tab' type='radio' aria-label='Upload file' name='framework_controls'
+  .tab-content.p-6.bg-white.border.border-slate-200
+    form hx-post=entity_url(corpus, :property, :add_document) hx-swap='none'
+      fieldset
+        legend.fieldset-legend File path
+        input.input name='path' type='text' placeholder="general/overview.md"
+        legend.fieldset-legend Content 
+        textarea.textarea.w-full name='content' rows="10"
+      button.btn.btn-primary.btn-sm#save-inline type="submit" Save
+
+  input.tab role='tab' type='radio' aria-label='Prepare AI version' name='framework_controls'
+  .tab-content.p-6.bg-white.border.border-slate-200
+    form hx-post=entity_url(framework, :property, :prepare_version_job) hx-swap='innerHTML' hx-target='#job'
+      legend.fieldset-legend Version name
+      input.input name='version' type='text' placeholder="vAI.1"
+      legend.fieldset-legend Prompt 
+      textarea.textarea.w-full name='content' rows="10"= Scout.share.prompts.prepare.read
+      legend.fieldset-legend Endpoint 
+      select.select name='endpoint'
+        option{ disabled }Choose an endpoint
+        option{ selected } nano
+        - Scout.etc.AI.glob_names("*").each do |endpoint|
+          option= endpoint
+      input.input name='_format' type='hidden' value="job"
+      button.btn.btn-primary.btn-sm#save-inline type="submit" Prepare
+      #job
+
+  input.tab role='tab' type='radio' aria-label='Clone' name='framework_controls'
+  .tab-content.p-6.bg-white.border.border-slate-200
+    form hx-post=entity_url(framework, :property, :clone_version) hx-swap='none'
+      legend.fieldset-legend Version name
+      input.input name='version' type='text' placeholder="copy_of_v1"
+      select.select name='source'
+        option{ selected disabled } Choose version to clone
+        - framework.versions.each do |version|
+          option= version
+      button.btn.btn-primary.btn-sm#save-inline type="submit" Clone
+
+  input.tab role='tab' type='radio' aria-label='New' name='framework_controls'
+  .tab-content.p-6.bg-white.border.border-slate-200
+    form hx-post=entity_url(framework, :property, :new_version) hx-swap='none'
+      legend.fieldset-legend Version name
+      input.input name='version' type='text' placeholder="v2"
+      button.btn.btn-primary.btn-sm#save-inline type="submit" Create
+
+  input.tab role='tab' type='radio' aria-label='Delete' name='framework_controls'
+  .tab-content.p-6.bg-white.border.border-slate-200
+    form hx-post=entity_url(framework, :property, :delete_version) hx-swap='none'
+      select.select name='source'
+        option{ disabled selected } Choose version to delete
+        - framework.versions.each do |version|
+          option= version
+      button.btn.btn-error.btn-sm#save-inline type="submit" Delete
+
+== entity_fragment corpus, :action, :files, 'Corpus_add_document from:body, Corpus_delete, Document_save'

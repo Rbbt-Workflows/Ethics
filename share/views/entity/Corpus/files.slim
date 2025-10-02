@@ -1,121 +1,32 @@
 - corpus = entity
 - docs = corpus.documents
 
-/ Add new document (collapsible)
-details.collapse-arrow.bg-base-200.mb-4
-  summary.collapse-title.font-medium Add new document
-  .space-y-3
-    .grid.grid-cols-1.md:grid-cols-2.gap-4
-      .form-control
-        label.label
-          span.label-text.font-medium Relative path (inside corpus)
-        input#new-doc-name.input.input-bordered.w-full type="text" placeholder="e.g. basics/overview.md"
-        p.text-xs.text-slate-500.mt-1 Use subfolders to organize, extension recommended (.md)
-      .form-control.md:col-span-2
-        label.label
-          span.label-text.font-medium Content
-        textarea#new-doc-content.textarea.textarea-bordered.w-full rows="10" data-markdown-editor="true" placeholder="Write some markdown…"
-    .flex.justify-end.gap-2
-      button.btn.btn-ghost.btn-sm type="button" _="on click toggle .hidden on the closest <details/>" Cancel
-      button#create-doc.btn.btn-primary.btn-sm type="button" Create
-
-/ Upload a file (collapsible)
-details.collapse-arrow.bg-base-200.mb-6
-  summary.collapse-title.font-medium Upload a file
-  .space-y-3
-    .form-control
-      label.label
-        span.label-text.font-medium Choose file
-      input#upload-file.file-input type="file" accept=".md,.markdown,.txt"
-      p.text-xs.text-slate-500.mt-1 The file name will be used as the document path
-    .flex.justify-end
-      button#upload-btn.btn.btn-sm.btn-primary type="button" Upload
-
-/ Divider + list header
-.divider
-.flex.items-center.justify-between.mb-2
-  h3.font-medium.text-slate-700 Documents (#{docs.length})
-  span.text-xs.text-slate-500= corpus.directory
-
-/ Documents list
 ul.divide-y.divide-slate-200.bg-white.rounded-md.border.border-slate-200
   - if docs.empty?
     li.p-4.text-slate-500 No documents yet
   - else
     - docs.each do |doc|
+      - id = "editor-#{doc.to_s.gsub(/[^\w\-]/,'_')}"
       - doc_entity = corpus.document(doc)
-      li.flex.items-center.justify-between.px-3.py-2
-        .flex.items-center.gap-3
-          .i.fa-file.text-slate-400
-          a.link.link-primary href=entity_url(doc_entity) = doc
-        .flex.items-center.gap-2
-          a.btn.btn-xs href=entity_url(doc_entity, :action, :edit) Edit
+      li.flex.items-start.justify-between.px-3.py-2 _="on click set the innerHTML of .viewer to ''"
+        .flex.items-start.gap-3.w-full
+          .min-w-0.flex-1
+            .flex.items-center.gap-3
+              a.link.link-primary[
+              hx-get=entity_url(doc_entity, :action, :preview) 
+              hx-swap="innerHTML"
+              hx-target="##{id}"
+              ]= doc
+        .flex.items-center.gap-2.flex-shrink-0
+          a.btn.btn-xs[
+            hx-get=entity_url(doc_entity, :action, :inline_edit)
+            hx-swap="innerHTML"
+            hx-target="##{id}"
+          ] Edit
           button.btn.btn-xs.btn-outline.btn-error[
-            hx-get=entity_url(corpus, :property, :delete, _format: 'json', args: [doc].to_json)
-            hx-swap='none'
+            hx-get=entity_url(corpus, :property, :delete, args: [doc])
             hx-confirm="Delete this document?"
-            hx-on='htmx:afterRequest: window.toast("Deleted"); htmx.ajax("GET", "#{entity_url(corpus, :action, :files, _format: 'html')}", {target: "#files"})'
+            hx-swap='none'
           ] Delete
 
-/ Inline scripts to handle create & upload (simple and robust)
-javascript:
-  (function(){
-    var createBtn = document.getElementById("create-doc");
-    var nameInp = document.getElementById("new-doc-name");
-    var contentTa = document.getElementById("new-doc-content");
-    var corpusId = "#{corpus}";
-
-    function getContent() {
-      if (!contentTa) return "";
-      return (contentTa._easymde ? contentTa._easymde.value() : contentTa.value);
-    }
-
-    if (createBtn) {
-      createBtn.addEventListener("click", function(){
-        var name = nameInp && nameInp.value && nameInp.value.trim();
-        if (!name) { window.toast("Provide a path for the new document"); return; }
-        var documentId = corpusId + "·" + name;
-        var content = getContent();
-
-        fetch("/save_document?_format=json", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ document: documentId, content: content })
-        }).then(function(r){
-          if (!r.ok) throw new Error("Save failed");
-          return r.json();
-        }).then(function(){
-          window.toast("Document saved");
-          htmx.ajax("GET", "#{entity_url(corpus, :action, :files, _format: 'html')}", { target: "#files" });
-        }).catch(function(err){
-          alert(err.message || "Save failed");
-        });
-      });
-    }
-
-    var uploadBtn = document.getElementById("upload-btn");
-    var uploadInp = document.getElementById("upload-file");
-    if (uploadBtn && uploadInp) {
-      uploadBtn.addEventListener("click", function(){
-        var f = uploadInp.files && uploadInp.files[0];
-        if (!f) { window.toast("No file selected"); return; }
-        f.text().then(function(text){
-          var documentId = corpusId + "·" + f.name;
-          return fetch("/save_document?_format=json", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ document: documentId, content: text })
-          });
-        }).then(function(r){
-          if (!r.ok) throw new Error("Upload failed");
-          return r.json();
-        }).then(function(){
-          window.toast("Uploaded " + (uploadInp.files[0] && uploadInp.files[0].name));
-          htmx.ajax("GET", "#{entity_url(corpus, :action, :files, _format: 'html')}", { target: "#files" });
-        }).catch(function(err){
-          alert(err.message || "Upload failed");
-        });
-      });
-    }
-  })();
-
+      .viewer id=id

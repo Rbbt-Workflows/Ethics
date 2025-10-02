@@ -1,0 +1,7 @@
+- type = :entity unless defined? type
+- other = nil unless defined? other
+- options = {} unless defined? options and options
+- options[:cache] = false
+- class_name = filter.gsub(',', ' ')
+. class=class_name hx-get=entity_url(entity, type, other, options.merge(_layout: false, _update: :reload)) hx-trigger=filter
+  == render_entity_partial(entity, type, other, **options)

@@ -24,12 +24,20 @@ module Document
     Corpus.setup([framework, version] * "·")
   end
 
+  property :file do
+    corpus.directory[path]
+  end
+
   property :content do
-    corpus.directory[path].read
+    file.read
   end
   
   property :save do |content|
     corpus.save path, content
+  end
+
+  property :check do
+    file
   end
 end
 

@@ -3,3 +3,7 @@
 .markdown-body { }
 .htmx-indicator { display: none; }
 .htmx-request .htmx-indicator { display: inline-block; }
+
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "@tailwindcss/typography";

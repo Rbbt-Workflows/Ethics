@@ -31,6 +31,10 @@ module Corpus
     Document.setup([self, document] * "·")
   end
 
+  property :add_document do |name,content|
+    document(name).save content
+  end
+
   def check_filename(filename)
     filename = filename.find if Path === filename
     raise "Not relative" unless Misc.path_relative_to(File.expand_path(directory), filename)
@@ -44,5 +48,9 @@ module Corpus
   def delete(file)
     check_filename(directory[file])
     Open.rm_rf directory[file]
+  end
+
+  property :check do
+    directory
   end
 end

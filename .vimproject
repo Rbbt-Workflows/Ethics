@@ -1,17 +1,24 @@
 Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.sass *.txt *.conf" {
  workflow.rb
  config.ru
+ tailwind.config.js
+ postcss.config.js
+ package.json
  chats=chats filter="*"{
-  daisyui
+  job
+
+  changes
   slim
+  tailwindcss
+  tailwindcss.2
   web=web{
-   system
-   intro
-   scout
    current
-
+   intro
    next
-
+   runs
+   scout
+   system
+   wait
   }
   frameworks=frameworks {
    list.csv
@@ -89,8 +96,8 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    Casuistry=Casuistry {
     glossary.md
     bibliography=bibliography {
-     citations_common_passages.md
      Jonsen_Toulmin_The_Abuse_of_Casuistry_1988.md
+     citations_common_passages.md
      modern_papers=modern_papers {
       casuistry_review_2015.md
      }
@@ -311,8 +318,8 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     casebank=casebank {
      paradigm_cases.md
      worked_example_AI_diagnostic_bias.md
-     worked_example_genomic_data_sharing.md
      worked_example_ICU_triage_principlism.md
+     worked_example_genomic_data_sharing.md
     }
     domain=domain {
      AI_biomed_technical_primer.md
@@ -465,9 +472,9 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
      modern-works.md
     }
     cases=cases {
+     ICU-triage-pandemic.md
      case-bank-index.md
      diagnostic-AI-bias.md
-     ICU-triage-pandemic.md
      vaccine-allocation-limited-supplies.md
     }
     evaluation=evaluation {
@@ -567,13 +574,14 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    moral_machine_experiment
   }
   old=old{
+   Resources.zip
    comparison
    cotroversial
    evaluate_utilitarianism
    evaluation.rb
+   file_component
    files
    files.rb
-   file_component
    intro
    moral_machine_experiment
    moral_machine_experiment_evaluation.rb
@@ -582,7 +590,6 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    preparation.rb
    publication
    reading_list
-   Resources.zip
    self_driving
    test
    test2
@@ -591,8 +598,12 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
   }
  }
  lib=lib {
-  datastore.rb
   sinatra.rb
+  sinatra=sinatra{
+   helpers.rb
+   misc.rb
+   runs.rb
+  }
   entity=entity{
    framework.rb
    corpus.rb
@@ -602,28 +613,45 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
   }
  }
  share=share{
+  prompts=prompts{
+   coordinator
+   generator
+   evaluator
+
+   prepare
+  }
+
   views=views {
    layout.slim
    wait.slim
+   wait.slim.save
 
    main=main{
     frameworks.slim
     use_cases.slim
     runs.slim
     run_info.slim
+    sleep.slim
    }
+   partial=partial{
+    markdown.slim
+    trigger.slim
+    entity_fragment.slim
+   }
+
    entity=entity{
     Framework.slim
     Framework=Framework{
-     corpus_pane.slim
-    }
-    Document.slim
-    Document=Document{
-     edit.slim
+     corpora.slim
     }
     Corpus.slim
     Corpus=Corpus{
      files.slim
+    }
+    Document.slim
+    Document=Document{
+     preview.slim
+     inline_edit.slim
     }
     UseCase.slim
     UseCase=UseCase{
@@ -636,9 +664,6 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     }
     Evaluation.slim
    }
-   partial=partial{
-    markdown.slim
-   }
    auth=auth{
     missing.slim
    }
@@ -650,11 +675,6 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
      app.js
     }
    }
-  }
-  prompts=prompts{
-   coordinator
-   generator
-   evaluator
   }
  }
 }

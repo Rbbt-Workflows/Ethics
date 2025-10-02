@@ -7,6 +7,19 @@
     if (token) {
       evt.detail.headers["X-CSRF-Token"] = token.content;
     }
+
+    var script_name_obj = document.querySelector('meta[name="script_name"]');
+    var script_name = null;
+    if (script_name_obj){
+        script_name = script_name_obj.content
+        if (script_name == ""){
+            script_name = null
+        }
+    }
+
+    if (script_name && evt.detail.path && evt.detail.path.startsWith("/") && ! evt.detail.path.startsWith(script_name)) {
+        evt.detail.path = script_name + '/'  + evt.detail.path;
+    }
   });
 
   // Utilities to lazy-load scripts/styles
@@ -72,4 +85,13 @@
       setTimeout(function () { t.remove(); }, 300);
     }, 2000);
   };
+
+  tailwind.config = {
+      theme: {
+          extend: {
+              fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] }
+          }
+      }
+  }
+
 })();

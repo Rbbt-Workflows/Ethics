@@ -10,16 +10,5 @@
   == Kramdown::Document.new(use_case.description).to_html
 
 / Tabs to run evaluations over frameworks
-.tabs.tabs-boxed.tabs.tabs-boxed role='tablist'
-  - Ethics::FRAMEWORKS.each_with_index do |fw, i|
-    - fw = Framework.setup(fw)
-    - version = fw.version
-    - evaluation = Evaluation.setup([fw, version, use_case] * "·")
-    a.tab[role='tab'
-      class=(i==0 ? 'tab-active' : '')
-      _='on click remove .tab-active from .tab then add .tab-active to me'
-      hx-get=entity_url(evaluation, :entity, nil, _format: 'html')
-      hx-target='#content'
-      ]= fw
 
 #content.mt-6
