@@ -1,0 +1,16 @@
+
+form.mt-8 hx-post=entity_url(entity, :property, :evaluate_use_case_job) hx-target='#target'
+  select.select name='use_case'
+    option{ disabled selected }Choose a use case
+    - Scout.share.use_cases.glob_names("*").each do |use_case|
+      option= use_case
+  input.input name='version' type='hidden' value=version
+  select.select name='endpoint'
+    option{ disabled selected }Choose an endpoint
+    - Scout.etc.AI.glob_names("*").each do |endpoint|
+      option= endpoint
+  input.input name='_format' type='hidden' value="job"
+  input.input name='_layout' type='hidden' value="false"
+  button.btn.btn-primary.btn-sm#save-inline type="submit" Run
+
+#target.mt-8
