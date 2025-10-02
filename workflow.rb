@@ -9,7 +9,7 @@ require 'entity/framework'
 module Ethics
   extend Workflow
 
-  FRAMEWORKS = Framework.setup Scout.share.frameworks.glob("*").map{|it| Framework.setup(it.basename) }
+  FRAMEWORKS = Framework.setup Scout.share.corpora.glob_names("*")
   ENDPOINTS = Scout.etc.AI.glob('*').collect{|f| f.basename }
 
   input :use_case, :text, 'Description of use case to evaluate', nil, required:true 
@@ -18,7 +18,9 @@ module Ethics
   input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
   task :evaluate => :text do |use_case,framework,version,endpoint|
     framework = Framework.setup(framework)
+
     agent = LLM.agent endpoint: endpoint
+    
     agent.import Scout.share.prompts.evaluator.find
 
     agent.directory framework.corpus_dir(version)
@@ -33,7 +35,9 @@ Use case:
     EOF
 
     res = agent.chat
+
     agent.save file('chat')
+
     res
   end
 
@@ -41,6 +45,7 @@ Use case:
   input :framework, :select, 'Framework to apply', nil, select_options: FRAMEWORKS
   input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
   task :prepare => :array do |prompt,framework,endpoint|
+
     coordinator = LLM.agent
     coordinator.import Scout.share.prompts.coordinator.find
     coordinator.user <<-EOF
@@ -54,6 +59,8 @@ following these instructions:
 Please determine the list of files that need to be created
     EOF
 
+    dictionary = coordinator.json
+
     generator = LLM.agent endpoint: endpoint
     generator.start_chat.import Scout.share.prompts.generator.find
     generator.start_chat.user <<-EOF
@@ -64,8 +71,8 @@ following these instructions:
 #{prompt}
 <instructions/>
     EOF
-    dictionary = coordinator.json
     generator.option :previous_response_id, coordinator.get_previous_response_id
+
     dictionary.each do |file, description|
       generator.start unless %w(openai deep nano).include? endpoint
       generator.user <<-EOF
