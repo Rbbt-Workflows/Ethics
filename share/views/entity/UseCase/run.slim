@@ -1,9 +1,15 @@
-ul
-  - Ethics::FRAMEWORKS.each do |framework|
-    - framework = Framework.setup framework
-    - version = framework.version
-    - evaluation = Evaluation.setup([framework, version, entity] * "·")
-    li.flex.items-center.justify-between.border-b.py-2
-      span= framework
-      a.btn.btn-xs href=entity_url(evaluation) Open
+form hx-post=entity_url(entity, :property, :evaluate_job) hx-target='#target'
+  select.select name='framework'
+    option{ disabled selected }Choose an framework
+    - Ethics::FRAMEWORKS.each do |framework|
+      option= framework
+  input.input name='version' type='text'
+  select.select name='endpoint'
+    option{ disabled selected }Choose an endpoint
+    - Scout.etc.AI.glob_names("*").each do |endpoint|
+      option= endpoint
+  input.input name='_format' type='hidden' value="job"
+  input.input name='_layout' type='hidden' value="false"
+  button.btn.btn-primary.btn-sm#save-inline type="submit" Run
 
+#target.mt-8

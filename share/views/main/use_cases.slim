@@ -6,7 +6,7 @@ ul.mt-4.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-4
   - UseCase.use_case_dir.glob_names("**").each do |use_case|
     - UseCase.setup use_case
     li.card.bg-base-100.border.border-slate-200.shadow-sm
-      a href= entity_url(use_case, :entity, nil, link_class: 'btn btn-sm')
+      a href= entity_url(use_case, :entity, nil)
         .card-body
           h3.card-title= use_case
           p.text-slate-500.truncate= use_case.description[0, 180]

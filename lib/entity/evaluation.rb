@@ -23,6 +23,6 @@ module Evaluation
   end
 
   property :job do
-    Ethics.job(:evaluate, use_case: use_case.description, framework: framework, endpoint: endpoint)
+    Ethics.job(:evaluate, use_case: use_case.description, framework: framework, endpoint: endpoint, version: version)
   end
 end

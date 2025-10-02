@@ -21,4 +21,8 @@ module UseCase
     Open.rm_rf UseCase.use_case_dir[self]
     true
   end
+
+  property :evaluate_job do |framework,version,endpoint|
+    Ethics.job(:evaluate, use_case: description, framework: framework, version: version, endpoint: endpoint)
+  end
 end

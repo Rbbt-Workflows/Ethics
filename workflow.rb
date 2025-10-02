@@ -14,16 +14,14 @@ module Ethics
 
   input :use_case, :text, 'Description of use case to evaluate', nil, required:true 
   input :framework, :select, 'Framework to apply', nil, select_options: FRAMEWORKS
-  input :version, :select, 'Framework version to use', 'active'
+  input :version, :select, 'Framework version to use', nil, required: true
   input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
-  task :evaluate => :text do |use_case,framework,endpoint|
+  task :evaluate => :text do |use_case,framework,version,endpoint|
     framework = Framework.setup(framework)
     agent = LLM.agent endpoint: endpoint
     agent.import Scout.share.prompts.evaluator.find
 
-    version = framework.version if version.nil? || version.to_s == 'active'
-
-    agent.directory framework.corpus_for_version(version)
+    agent.directory framework.corpus_dir(version)
 
     agent.user <<-EOF
 Please evaluate the following use case using the Ethical framework #{framework}.

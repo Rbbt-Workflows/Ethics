@@ -18,7 +18,7 @@ require_relative "entity/framework"
 require_relative "entity/corpus"
 require_relative "entity/document"
 require_relative "entity/use_case"
-require_relative "entity/evaluation"
+require_relative "entity/prompt"
 
 require_relative 'sinatra/runs'
 require_relative 'sinatra/helpers'

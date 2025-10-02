@@ -28,11 +28,13 @@ html lang="en" class="h-full bg-slate-50"
         .flex.items-center.justify-between.h-16
           a href="/" class="text-lg font-semibold text-indigo-600 hover:text-indigo-700" Ethics Agent
           div class="hidden md:flex items-center gap-6"
-            a href="/main/frameworks" class="text-sm #{nav_active?('/frameworks') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Frameworks
-            a href="/main/use_cases" class="text-sm #{nav_active?('/use_cases') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" UseCases
+            a href="/main/frameworks" class="text-sm #{nav_active?('/main/frameworks') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Frameworks
+            a href="/main/use_cases" class="text-sm #{nav_active?('/main/use_cases') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" UseCases
+            a href="/main/prompts" class="text-sm #{nav_active?('/main/prompts') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Prompts
             a href="/main/runs" class="text-sm #{nav_active?('/main/runs') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Runs
             a href="/auth/login" class="text-sm #{nav_active?('/frameworks') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Login
-            a href=add_GET_param(fullpath, :_update, :reload) Reload
+            a.text-sm.text-slate-600.hover:text-slate-900 href=add_GET_param(fullpath, :_update, :reload) Reload
+            a.text-sm.text-slate-600.hover:text-slate-900 href=add_GET_param(fullpath, :_update, :css) CSS
           .flex.items-center.gap-2
             form action="#" method="get" class="relative"
               input type="text" name="q" placeholder="Search..." class="rounded-md border-slate-300 text-sm pl-8"

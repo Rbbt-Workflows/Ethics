@@ -29,8 +29,7 @@
       textarea.textarea.w-full name='content' rows="10"= Scout.share.prompts.prepare.read
       legend.fieldset-legend Endpoint 
       select.select name='endpoint'
-        option{ disabled }Choose an endpoint
-        option{ selected } nano
+        option{ disabled selected }Choose an endpoint
         - Scout.etc.AI.glob_names("*").each do |endpoint|
           option= endpoint
       input.input name='_format' type='hidden' value="job"

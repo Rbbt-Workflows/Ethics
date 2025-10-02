@@ -1,0 +1,13 @@
+.h1.text-xl.flex.items-center.justify-between
+  span Prompts
+
+ul.mt-4.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-4
+  - Scout.share.prompts.glob_names("**").each do |prompt|
+    - prompt = Prompt.setup prompt
+    li.card.bg-base-100.border.border-slate-200.shadow-sm
+      a href= entity_url(prompt, :entity, nil)
+        .card-body
+          h3.card-title= prompt
+          p.text-slate-500.truncate= Scout.share.prompts[prompt].read[0, 180]
+          .card-actions.justify-end
+

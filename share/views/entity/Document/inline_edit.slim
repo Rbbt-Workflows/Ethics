@@ -1,6 +1,6 @@
 - doc = entity
 
-form hx-post=entity_url(entity, :action, :save) hx-swap='none'
+form hx-post=entity_url(entity, :property, :save) hx-swap='none'
   .flex.justify-end.gap-2
     button.btn.btn-ghost.btn-sm type="button" _="on click set the innerHTML of the closest .viewer to ''" Cancel
     button.btn.btn-primary.btn-sm#save-inline type="submit" Save

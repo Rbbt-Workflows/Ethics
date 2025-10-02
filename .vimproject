@@ -610,6 +610,7 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    document.rb
    use_case.rb
    evaluation.rb
+   prompt.rb
   }
  }
  share=share{
@@ -629,6 +630,7 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    main=main{
     frameworks.slim
     use_cases.slim
+    prompts.slim
     runs.slim
     run_info.slim
     sleep.slim
@@ -655,14 +657,18 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     }
     UseCase.slim
     UseCase=UseCase{
-     description.slim
      run.slim
+     description.slim
      new.slim
      create.slim
      edit.slim
      delete.slim
     }
     Evaluation.slim
+    Prompt.slim
+   }
+   Ethics=Ethics{
+    evaluate.slim
    }
    auth=auth{
     missing.slim
