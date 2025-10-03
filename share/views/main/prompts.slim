@@ -1,13 +1,23 @@
 .h1.text-xl.flex.items-center.justify-between
   span Prompts
 
+- version = Prompt.versions.first unless defined?(version) && Prompt.versions.include?(version)
+
+.tabs.tablist.tabs-lift.mb-10.w-full.flex role='tablist'
+  input.tab type='radio' aria-label="Version #{version}" name='framework_controls'
+  .tab-content.p-6.bg-white.border-2.border-slate-200
+    ul.menu
+      - Prompt.versions.each do |version|
+        li.item.btn.btn-primary.btn-sm.mb-2
+          a(href=add_GET_param(fullpath, :version, version)) = version
+
 ul.mt-4.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-4
-  - %w(coordinator generator evaluator prepare).each do |prompt|
-    - prompt = Prompt.setup prompt
+  - %w(coordinator generator evaluator prepare).each do |role|
+    - prompt = Prompt.setup [role, version] * "·"
     li.card.bg-base-100.border.border-slate-200.shadow-sm
-      a href= entity_url(prompt, :entity, nil)
+      a href= entity_url(prompt, :entity)
         .card-body
-          h3.card-title= prompt
-          p.text-slate-500.truncate= Scout.share.prompts[prompt].read[0, 180]
+          h3.card-title= prompt.role
+          p.text-slate-500.truncate= prompt.content[0, 180]
           .card-actions.justify-end
 

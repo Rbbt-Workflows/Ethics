@@ -11,3 +11,7 @@
 .prose{
     max-width: 50em;
 }
+
+.editor-toolbar .table{
+    width: auto;
+}

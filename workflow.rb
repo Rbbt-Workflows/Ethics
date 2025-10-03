@@ -14,14 +14,15 @@ module Ethics
 
   input :use_case, :text, 'Description of use case to evaluate', nil, required:true 
   input :framework, :select, 'Framework to apply', nil, select_options: FRAMEWORKS
-  input :version, :select, 'Framework version to use', nil, required: true
+  input :framework_version, :select, 'Framework version to use', nil, required: true
+  input :prompt_version, :select, 'Prompt version to use', nil, required: true
   input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
-  task :evaluate => :text do |use_case,framework,version,endpoint|
+  task :evaluate => :text do |use_case,framework,framework_version,prompt_version,endpoint|
     framework = Framework.setup(framework)
 
     agent = LLM.agent endpoint: endpoint
     
-    agent.import Scout.share.prompts.evaluator.find
+    agent.import Scout.share.prompts[prompt_version].evaluator.find
 
     agent.directory framework.corpus_dir(version)
 
@@ -43,11 +44,12 @@ Use case:
 
   input :prompt, :text, 'Prompt to use to generate the documentation', nil, required: true
   input :framework, :select, 'Framework to apply', nil, select_options: FRAMEWORKS
+  input :prompt_version, :select, 'Prompt version to use', nil, required: true
   input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
-  task :prepare => :array do |prompt,framework,endpoint|
+  task :prepare => :array do |prompt,framework,prompt_version,endpoint|
 
     coordinator = LLM.agent
-    coordinator.import Scout.share.prompts.coordinator.find
+    coordinator.import Scout.share.prompts[prompt_version].coordinator.find
     coordinator.user <<-EOF
 The user wants to create documentation for the framework #{framework},
 following these instructions:
@@ -62,7 +64,7 @@ Please determine the list of files that need to be created
     dictionary = coordinator.json
 
     generator = LLM.agent endpoint: endpoint
-    generator.start_chat.import Scout.share.prompts.generator.find
+    generator.start_chat.import Scout.share.prompts[prompt_version].generator.find
     generator.start_chat.user <<-EOF
 The user wants to create documentation for the framework #{framework},
 following these instructions:

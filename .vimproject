@@ -616,14 +616,6 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
   }
  }
  share=share{
-  prompts=prompts{
-   coordinator
-   generator
-   evaluator
-
-   prepare
-  }
-
   views=views {
    layout.slim
    wait.slim
@@ -639,7 +631,6 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    }
    partial=partial{
     markdown.slim
-    trigger.slim
     entity_fragment.slim
    }
 
@@ -684,6 +675,14 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
      app.js
     }
    }
+  }
+
+  prompts=prompts{
+   coordinator
+   generator
+   evaluator
+
+   prepare
   }
  }
 }
