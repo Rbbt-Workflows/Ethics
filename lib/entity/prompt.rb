@@ -20,11 +20,19 @@ module Prompt
     parts[1]
   end
 
+  property :file do
+    Scout.share.prompts[version][role]
+  end
+
   property :content do
-    Scout.share.prompts[version][role].read
+    file.read
   end
 
   property :save do |content|
-    Scout.share.prompts[version][role].write content
+    file.write content
+  end
+
+  property :check do
+    file
   end
 end

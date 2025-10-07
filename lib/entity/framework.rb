@@ -62,18 +62,18 @@ Provide a one-line description of the framework #{self}
 
     raise "Target exists #{target}" if target_dir.exists?
 
-    Open.link source_dir, target_dir
+    Open.cp source_dir, target_dir
   end
 
-  property :prepare_version_job do |target,prompt,endpoint|
+  property :prepare_version_job do |target,prompt_version,endpoint|
     target_dir = corpus_dir(target)
     raise "Target exists #{target}" if target_dir.exists?
-    Ethics.job(:prepare_version, prompt: prompt, framework: self, endpoint: endpoint, version: target)
+    Ethics.job(:prepare_version, prompt_version: prompt_version, framework: self, endpoint: endpoint, version: target)
   end
 
-  property :evaluate_use_case_job do |use_case, version,endpoint|
+  property :evaluate_use_case_job do |use_case,framework_version,prompt_version,endpoint|
     use_case = UseCase.setup use_case
-    Ethics.job(:evaluate, use_case: use_case.description, framework: self, endpoint: endpoint, version: version)
+    Ethics.job(:evaluate, use_case: use_case.description, framework: self, prompt_version: prompt_version, endpoint: endpoint, framework_version: framework_version)
   end
 
   property :check do

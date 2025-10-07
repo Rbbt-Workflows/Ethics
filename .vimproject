@@ -605,6 +605,7 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    helpers.rb
    misc.rb
    runs.rb
+   prompts.rb
   }
   entity=entity{
    framework.rb
@@ -674,15 +675,41 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     js=js{
      app.js
     }
+    plugins=plugins{
+     daisyui=daisyui {
+      daisyui.css
+      tailwindcss.js
+     }
+     easymde=easymde {
+      easymde.min.css
+      easymde.min.js
+     }
+     fonts=fonts {
+      fonts.css
+     }
+     htmx=htmx {
+      htmx.js
+      sse.js
+     }
+     hyperscript=hyperscript {
+      hyperscript.js
+     }
+     tailwind=tailwind {
+      tailwind_forms_typography.js
+     }
+
+    }
    }
   }
 
   prompts=prompts{
-   coordinator
-   generator
-   evaluator
+   v1=v1{
+    coordinator
+    generator
+    evaluator
 
-   prepare
+    prepare
+   }
   }
  }
 }

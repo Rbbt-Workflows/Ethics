@@ -1,0 +1,215 @@
+Plan for preparing materials to produce framework-specific ethical narratives
+
+Goal: Create a reusable, structured set of resources (templates, checklists, source repository, case bank, prompts, evaluation rubrics) that let me generate, for any given topic, an ethical narrative that: (a) faithfully applies the chosen moral framework in the way its proponents normally use it, (b) identifies and discusses typical critiques/limitations, and (c) where relevant addresses domain-specific concerns (especially medical ethics and AI in biomedicine).
+
+I. Core set of materials to prepare (universal)
+- Framework summaries (one page each)
+  - Concise statement of core principles, typical form of argument, primary goals.
+  - Key thinkers and canonical texts (citation list for quick reference).
+  - Short list of typical critiques and limits (how critics frame the problem).
+- Application template (skeleton narrative)
+  - Standard structure to be filled out for any topic (see “General narrative structure” below).
+- Guided question bank
+  - Generic discovery questions to clarify facts, stakeholders, values, uncertainties.
+  - Framework-specific question probes (see per-framework section).
+- Stakeholder mapping tool
+  - Template to list stakeholders, their interests/rights/expectations, power/vulnerability, likely impacts.
+- Evidence & sources repository
+  - Annotated bibliography for each framework (primary texts + contemporary papers).
+  - Domain-specific sources (medical ethics, AI ethics in biomed) and legal/regulatory documents.
+- Case bank
+  - Short summaries of precedent cases or canonical thought experiments for each framework (real-world and hypothetical).
+- Evaluation rubric / checklist
+  - Criteria for assessing whether a produced narrative is faithful to the framework and covers criticisms/limitations.
+- Example narratives
+  - 2–3 fully worked examples per framework (one simple vignette, one complex policy issue, one biomedical/AI case where relevant).
+- Update/maintenance plan
+  - How to add new sources, refresh case bank, and incorporate emerging debates (esp. fast-moving AI literature).
+
+II. General narrative structure (common template)
+1. Brief factual summary of the topic / case (what happened or proposal at hand; key uncertainties).
+2. Identification of stakeholders and relevant background facts.
+3. Statement of the framework’s core normative commitments (as proponents use them).
+4. Framings/questions specific to the framework (what counts as a moral good/wrong within this view?).
+5. Framework-specific application: step-by-step reasoning that yields moral judgments or guidance.
+6. Practical implications / recommended actions (policy, clinical, design, governance, etc.) derived from the framework’s conclusion.
+7. Critiques & limitations: presentation of the standard objections from rivals and how they matter to this case.
+8. Cross-check / reconciliation: where possible, note how other frameworks would reach different conclusions and how to weigh conflicts.
+9. Monitoring, implementation, and recommended safeguards (how to operationalize the recommendation and watch for harms).
+10. Sources & further reading.
+
+This template is the default; some frameworks require tailored emphases or different steps (see next section).
+
+III. Per-framework preparation and special templates
+
+For each framework prepare:
+- A one-page “how to apply” checklist with 6–10 concrete steps.
+- 6–8 probing questions tailored to that theory.
+- 2–3 example sentences illustrating the expected argumentative style.
+- One worked example applying it to a biomedical AI issue.
+
+1) Utilitarianism (Consequentialism)
+- Materials:
+  - Decision procedure: identify actions, estimate consequences (benefits/harms), quantify/compare (qualitative or quantitative), select action maximizing aggregate utility.
+  - Heuristics for measuring outcomes (health QALYs, economic impacts, distributional weights).
+  - Guidance on uncertainty, probability-weighted outcomes, and dealing with incommensurables.
+- Special considerations:
+  - Tools for trade-off analysis and sensitivity analysis.
+  - Explicit treatment of distributional concerns (how to incorporate justice or weight against majority harm).
+- Critique handling:
+  - Explicitly raise minority rights concerns and provide utilitarian responses (rule utilitarianism, threshold constraints).
+- Example probes:
+  - Who is affected and how many? What measures capture welfare (health, well-being)? What are expected probabilities?
+
+2) Deontological Ethics (Kantian)
+- Materials:
+  - Procedure: identify maxims; test for universalizability; test for treating persons as ends not merely means; duty list.
+  - Template for deriving obligations from rules and for addressing conflicting duties.
+- Special considerations:
+  - How to treat duties in institutional contexts (e.g., clinician duties vs. system requirements).
+- Critique handling:
+  - Address rigidity by discussing possible priority rules, role-based exceptions, or prima facie duties.
+- Example probes:
+  - What universalizable maxim would this action express? Does it respect persons’ autonomy as ends?
+
+3) Virtue Ethics
+- Materials:
+  - Procedure: identify relevant virtues and vices, character traits to cultivate, practical wisdom (phronesis) consideration, role models.
+  - Focus on long-term character formation and flourishing (eudaimonia).
+- Special considerations:
+  - Translate institutional policies into character-relevant practices (what fosters/undermines virtues among professionals).
+- Critique handling:
+  - Where it lacks clear action guidance, provide decision heuristics: default to practical wisdom, consult role models, use situational exemplars.
+- Example probes:
+  - What virtues are at stake? What would a virtuous professional do?
+
+4) Care Ethics
+- Materials:
+  - Procedure: map relational networks, dependency dynamics, responsibilities of care, emotional responsiveness.
+  - Template for assessing obligations based on caring relationships and reciprocity.
+- Special considerations:
+  - Emphasize micro-level relationships (clinician-patient) and institutional supports for care.
+- Critique handling:
+  - Address concerns about impartial justice by showing how caring and justice might be balanced or how care can inform policy.
+- Example probes:
+  - Who depends on whom? What caring responsibilities are salient?
+
+5) Rawlsian Justice
+- Materials:
+  - Procedure: identify basic liberties, primary goods, apply veil of ignorance reasoning, lexical priority of liberty then difference principle.
+  - Tools to model fair distribution and inequality constraints.
+- Special considerations:
+  - Operationalize “fairness” in policy design (resource allocation, priority setting).
+- Critique handling:
+  - Respond to abstraction critiques by explaining how Rawlsian principles can be operationalized with contextual constraints.
+- Example probes:
+  - Which distribution would someone choose behind a veil of ignorance? Are inequalities arranged to benefit the least advantaged?
+
+6) Principlism (Biomedical Ethics)
+- Materials:
+  - Procedure: analyze through the four principles (autonomy, beneficence, nonmaleficence, justice); identify conflicts and consider balancing/priority rules.
+  - Guidance on consent, capacity, risk–benefit analysis, resource allocation.
+- Special considerations:
+  - Widely used in clinical contexts—provide concrete conflict-resolution heuristics (e.g., which principles tend to trump in emergency).
+- Critique handling:
+  - Address lack of prioritization by offering context-sensitive ordering (clinical vs. population level).
+- Example probes:
+  - Has informed consent been obtained? What harms/benefits are probable? Who bears the burdens?
+
+7) Contractarianism / Social Contract Theory
+- Materials:
+  - Procedure: identify reasonable terms of cooperation, fairness constraints, and legitimate institutions; consider mutual advantage and consent-like justification.
+  - Template for modeling hypothetical agreements among stakeholders (including disadvantaged groups).
+- Special considerations:
+  - Use for policy legitimacy discussions, regulation, institutional design.
+- Critique handling:
+  - Address assumptions about rational self-interest by including protections for vulnerable parties and concession rules.
+- Example probes:
+  - What rules would rational agents accept for mutual benefit? What protections do those with less bargaining power need?
+
+8) Rights-Based Ethics
+- Materials:
+  - Procedure: map relevant rights (positive/negative), understand scope and limits, resolve rights conflicts (priority rules or balancing methods).
+  - List of typical rights in biomedical contexts (privacy, bodily integrity, informed consent, free speech).
+- Special considerations:
+  - Legal/regulatory crosswalk: how rights map to law and policy.
+- Critique handling:
+  - Address conflicts and communal obligations—show methods for balancing or adjudicating rights clashes.
+- Example probes:
+  - Which individual rights are implicated and how strong are they? Are there competing rights?
+
+9) Communitarian Ethics
+- Materials:
+  - Procedure: identify community values and traditions, weigh communal goods, examine social practices that constitute identity.
+  - Template to assess cultural sensitivity, legitimacy of external critiques, and risks of oppression.
+- Special considerations:
+  - Use for localized policy advice and culturally embedded decisions.
+- Critique handling:
+  - Address risk of oppressive tradition by specifying minimal universal constraints (human rights floor) and internal mechanisms of reform.
+- Example probes:
+  - What do relevant communities value? How would proposed changes affect community cohesion and identity?
+
+10) Casuistry (Case-based reasoning)
+- Materials:
+  - Case-analogy template: identify paradigm cases, relevant similarities/differences, apply analogical reasoning to derive judgment.
+  - Database of paradigmatic precedents sorted by problem type.
+- Special considerations:
+  - Good for practical dilemmas, clinical ethics committees, resolving borderline cases.
+- Critique handling:
+  - Make explicit the criteria used for analogical comparisons; where subjectivity is high, require multi-expert triangulation.
+- Example probes:
+  - Which precedent cases are most analogous? What distinctions matter?
+
+IV. Domain-specific add-ons: Medical ethics & AI in biomedicine
+- Special resources:
+  - Regulatory frameworks: HIPAA/GDPR implications, FDA/EMA guidance, medical device regulation for AI/ML, clinical trial ethics.
+  - Technical primer: explainability, validation metrics, bias/fairness measures, dataset provenance, model drift, monitoring.
+  - Risk assessment template: patient safety hazards, privacy harms, systemic inequities.
+  - Consent & governance templates: dynamic consent models, data stewardship, audit trails, incident response.
+  - Clinical oversight checklist: human-in-loop requirements, escalation protocols, transparency to clinicians and patients.
+- Framework-specific intersections:
+  - Utilitarianism: include frameworks for cost-effectiveness (QALYs), population-level harms (algorithmic bias).
+  - Principlism: explicit templates for consent, capacity, and clinician responsibilities when AI recommendation conflicts with clinician judgment.
+  - Rights-based: emphasize informational self-determination and data protection rights.
+  - Contractarian: governance agreements among hospitals, vendors, and patients for data use.
+  - Care ethics & virtue ethics: clinician–patient relationship impacts from automation.
+- Case examples:
+  - Triage algorithms, diagnostic AI with racial bias, predictive models for readmission, remote monitoring systems, large genomic data sharing.
+
+V. Quality control, evaluation, and presentation
+- Evaluation rubric (examples of criteria)
+  - Fidelity: Does the narrative consistently apply the framework’s concepts and decision rules?
+  - Completeness: Are stakeholders and trade-offs fully identified?
+  - Critical balance: Are standard critiques acknowledged and addressed?
+  - Practicality: Does the narrative yield actionable recommendations or clear guidance?
+  - Evidence linkage: Are factual claims supported by suitable sources?
+- Peer review checklist: have an independent reviewer check for misrepresentation of the framework.
+- Format & tone guidelines:
+  - Keep narratives in structured sections (as per general template).
+  - Use neutral explanatory tone for framework exposition; normative language only in the application/recommendation section.
+  - Provide citations for claims, particularly when invoking data, legal rules, or technical properties.
+
+VI. Process workflow for producing a framework narrative
+1. Intake: gather case facts, stakeholders, objectives, constraints, and domain (e.g., clinical AI).
+2. Select primary framework(s) to apply.
+3. Run discovery question sets (general + framework-specific).
+4. Draft narrative using the general template, filling in framework-specific application steps and using the per-framework heuristics.
+5. Add domain-specific appendices (medical/AI risk assessment if relevant).
+6. Add critique section (standard objections + case-specific implications).
+7. Cross-check with alternative frameworks (brief comparative note).
+8. Review against rubric, iterate, and finalize.
+9. Deliver narrative plus short executive summary and recommended actionable steps and monitoring plan.
+
+VII. Maintenance and extension
+- Regularly update the source repository (quarterly) with major developments in ethics literature, new regulations, and high-impact case studies in AI/biomed.
+- Add new frameworks or sub-variants (e.g., rule utilitarianism, Kantian contractualism) as needed.
+- Track feedback from stakeholders and reviewers to refine templates and heuristics.
+
+VIII. Example of quick-use artifacts to build first
+- One-page framework summaries (all frameworks) — immediate priority.
+- General narrative template document (editable).
+- 3 worked examples: (1) AI diagnostic tool with observed bias, (2) allocation of scarce ICU beds, (3) proposed data-sharing agreement for genomic research — each analyzed under utilitarianism, principlism, and rights-based ethics.
+- Annotated reading list (key texts from CSV + contemporary AI/biomed ethics papers).
+- Evaluation rubric and peer-review checklist.
+
+This plan gives a modular, repeatable approach: a common narrative skeleton ensures consistency, while per-framework checklists and question banks ensure each analysis reflects how proponents of that framework reason. Domain-specific supplements (especially for medical ethics and biomedical AI) will guarantee technical and regulatory accuracy.

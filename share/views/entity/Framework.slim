@@ -15,7 +15,9 @@ sass:
       width: auto
       position: static
 
-- version = framework.versions.first unless defined?(version) && framework.versions.include?(version)
+- unless defined?(version) && framework.versions.include?(version)
+  - version = preference(framework, framework.versions.first)
+  - version = framework.versions.first unless framework.versions.include?(version)
 
 == entity_fragment framework, :action, :corpora, 'prepare_job, delete_version, new_version, clone_version, prepare_version_done', version: version
 

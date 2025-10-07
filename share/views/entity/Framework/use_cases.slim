@@ -4,7 +4,11 @@ form.mt-8 hx-post=entity_url(entity, :property, :evaluate_use_case_job) hx-targe
     option{ disabled selected }Choose a use case
     - Scout.share.use_cases.glob_names("*").each do |use_case|
       option= use_case
-  input.input name='version' type='hidden' value=version
+  input.input name='framework_version' type='hidden' value=version
+  select.select name='prompt_version'
+    option{ disabled selected }Choose an prompt version
+    - Prompt.versions.each do |prompt_version|
+      option= prompt_version
   select.select name='endpoint'
     option{ disabled selected }Choose an endpoint
     - Scout.etc.AI.glob_names("*").each do |endpoint|

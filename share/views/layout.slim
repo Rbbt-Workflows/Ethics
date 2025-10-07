@@ -32,7 +32,7 @@ html lang="en" class="h-full bg-slate-50" data-theme="light"
             a href="/main/use_cases" class="text-sm #{nav_active?('/main/use_cases') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" UseCases
             a href="/main/prompts" class="text-sm #{nav_active?('/main/prompts') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Prompts
             a href="/main/runs" class="text-sm #{nav_active?('/main/runs') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Runs
-            a href="/auth/login" class="text-sm #{nav_active?('/frameworks') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Login
+            a href="/auth/login" class="text-sm" hx-boost="true" Login
             a.text-sm.text-slate-600.hover:text-slate-900 href=add_GET_param(fullpath, :_update, :reload) Reload
             a.text-sm.text-slate-600.hover:text-slate-900 href=add_GET_param(fullpath, :_update, :css) CSS
           .flex.items-center.gap-2

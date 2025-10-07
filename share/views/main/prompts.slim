@@ -1,15 +1,40 @@
-.h1.text-xl.flex.items-center.justify-between
-  span Prompts
+h2.text-2xl.font-semibold.flex.items-center.gap-3.mb-8
+  | Prompts
 
-- version = Prompt.versions.first unless defined?(version) && Prompt.versions.include?(version)
+
+- versions = Prompt.versions
+- add_checks Prompt.prompts_dir
+- add_checks versions.collect{|v| Prompt.prompts_dir[v] }
+- add_checks versions.collect{|v| Prompt.prompts_dir[v].glob_all("*") }
+- version = versions.first unless defined?(version) && Prompt.versions.include?(version)
 
 .tabs.tablist.tabs-lift.mb-10.w-full.flex role='tablist'
-  input.tab type='radio' aria-label="Version #{version}" name='framework_controls'
+  input.tab type='radio' aria-label="Version #{version}" name='prompt_controls'
   .tab-content.p-6.bg-white.border-2.border-slate-200
     ul.menu
-      - Prompt.versions.each do |version|
+      - versions.each do |version|
         li.item.btn.btn-primary.btn-sm.mb-2
           a(href=add_GET_param(fullpath, :version, version)) = version
+
+  input.tab role='tab' type='radio' aria-label='Clone' name='prompt_controls'
+  .tab-content.p-6.bg-white.border.border-slate-200
+    form hx-post='/prompt/clone_version' hx-swap='none'
+      legend.fieldset-legend Version name
+      select.select name='source'
+        option{ selected disabled } Choose version to clone
+        - versions.each do |version|
+          option= version
+      input.input name='version' type='text' placeholder="copy_of_v1"
+      button.btn.btn-primary.btn-sm#save-inline type="submit" Clone
+
+  input.tab role='tab' type='radio' aria-label='Delete' name='prompt_controls'
+  .tab-content.p-6.bg-white.border.border-slate-200
+    form hx-delete='/prompt/delete_version' hx-swap='none'
+      select.select name='version'
+        option{ disabled selected } Choose version to delete
+        - versions.each do |version|
+          option= version
+      button.btn.btn-error.btn-sm#save-inline type="submit" Delete
 
 ul.mt-4.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-4
   - %w(coordinator generator evaluator prepare).each do |role|

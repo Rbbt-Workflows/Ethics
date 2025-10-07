@@ -56,6 +56,7 @@
         element: ta,
         autofocus: ta.hasAttribute("data-autofocus"),
         spellChecker: false,
+        forceSync: true,
         status: false,
         minHeight: "200px",
         renderingConfig: { singleLineBreaks: false, codeSyntaxHighlighting: true },

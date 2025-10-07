@@ -9,6 +9,8 @@
       - framework.versions.each do |version|
         li.item.btn.btn-primary.btn-sm.mb-2
           a(href=entity_url(framework, :entity, nil, version: version)) = version
+        li.item.btn.btn-primary.btn-sm.mb-2
+          a(hx-post=preference_url(framework, version)) activate
 
   input.tab role='tab' type='radio' aria-label='Upload file' name='framework_controls'
   .tab-content.p-6.bg-white.border.border-slate-200
@@ -25,8 +27,11 @@
     form hx-post=entity_url(framework, :property, :prepare_version_job) hx-swap='innerHTML' hx-target='#job'
       legend.fieldset-legend Version name
       input.input name='version' type='text' placeholder="vAI.1"
-      legend.fieldset-legend Prompt 
-      textarea.textarea.w-full name='content' rows="10"= Scout.share.prompts[Prompt.versions.first].prepare.read
+      legend.fieldset-legend Prompt version 
+      select.select name='prompt_version'
+        option{ disabled selected }Choose an prompt version
+        - Prompt.versions.each do |prompt_version|
+          option= prompt_version
       legend.fieldset-legend Endpoint 
       select.select name='endpoint'
         option{ disabled selected }Choose an endpoint
@@ -40,11 +45,11 @@
   .tab-content.p-6.bg-white.border.border-slate-200
     form hx-post=entity_url(framework, :property, :clone_version) hx-swap='none'
       legend.fieldset-legend Version name
-      input.input name='version' type='text' placeholder="copy_of_v1"
       select.select name='source'
         option{ selected disabled } Choose version to clone
         - framework.versions.each do |version|
           option= version
+      input.input name='version' type='text' placeholder="copy_of_v1"
       button.btn.btn-primary.btn-sm#save-inline type="submit" Clone
 
   input.tab role='tab' type='radio' aria-label='New' name='framework_controls'

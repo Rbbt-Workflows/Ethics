@@ -13,6 +13,7 @@ require 'scout'          # to use Scout paths, Open, Path
 require 'scout/sinatra/base'
 require 'scout/sinatra/entity'
 require 'scout/sinatra/workflow'
+require 'scout/sinatra/auth'
 
 require_relative "entity/framework"
 require_relative "entity/corpus"
@@ -21,6 +22,7 @@ require_relative "entity/use_case"
 require_relative "entity/prompt"
 
 require_relative 'sinatra/runs'
+require_relative 'sinatra/prompts'
 require_relative 'sinatra/helpers'
 
 Workflow.require_workflow "Ethics"
@@ -33,11 +35,6 @@ class EthicsApp < Sinatra::Base
   before do
     content_type "text/html; charset=utf-8"
     headers "X-Frame-Options" => "DENY"
-  end
-
-  # Dashboard (placeholder)
-  get "/" do
-    redirect "/main/frameworks"
   end
 
   after do
@@ -91,10 +88,17 @@ class EthicsApp < Sinatra::Base
     headers['HX-Trigger'] = triggers * ", "
   end
 
+  # Dashboard (placeholder)
+  get "/" do
+    redirect "/main/frameworks"
+  end
+
+
   register SinatraScoutBase
   register SinatraEthicsRuns
   register SinatraEthicsHelpers
   register SinatraScoutEntity
+  register SinatraScoutAuth
   register SinatraScoutWorkflow
 
   add_workflow Ethics

@@ -22,9 +22,9 @@ module Ethics
 
     agent = LLM.agent endpoint: endpoint
     
-    agent.import Scout.share.prompts[prompt_version].evaluator.find
+    agent.system Scout.share.prompts[prompt_version].evaluator.find
 
-    agent.directory framework.corpus_dir(version)
+    agent.directory framework.corpus_dir(framework_version)
 
     agent.user <<-EOF
 Please evaluate the following use case using the Ethical framework #{framework}.
@@ -42,20 +42,19 @@ Use case:
     res
   end
 
-  input :prompt, :text, 'Prompt to use to generate the documentation', nil, required: true
   input :framework, :select, 'Framework to apply', nil, select_options: FRAMEWORKS
   input :prompt_version, :select, 'Prompt version to use', nil, required: true
   input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
-  task :prepare => :array do |prompt,framework,prompt_version,endpoint|
+  task :prepare => :array do |framework,prompt_version,endpoint|
 
     coordinator = LLM.agent
-    coordinator.import Scout.share.prompts[prompt_version].coordinator.find
+    coordinator.system Scout.share.prompts[prompt_version].coordinator.find
     coordinator.user <<-EOF
 The user wants to create documentation for the framework #{framework},
 following these instructions:
 
 <instructions>
-#{prompt}
+#{Scout.share.prompts[prompt_version].prepare.read}
 <instructions/>
 
 Please determine the list of files that need to be created
@@ -64,7 +63,7 @@ Please determine the list of files that need to be created
     dictionary = coordinator.json
 
     generator = LLM.agent endpoint: endpoint
-    generator.start_chat.import Scout.share.prompts[prompt_version].generator.find
+    generator.start_chat.system Scout.share.prompts[prompt_version].generator.find
     generator.start_chat.user <<-EOF
 The user wants to create documentation for the framework #{framework},
 following these instructions:
@@ -101,6 +100,19 @@ The content description of the file is:
 
     Open.link prepare.files_dir, framework.corpus_dir(version)
     prepare.files_dir.glob_names("*")
+  end
+
+  input :framework_versions, :json, "Dictionary with framework versions", nil, required: true
+  dep :evaluate, framework: :placeholder, framework_versions: :placeholder do |jobname, options|
+    framework_versions = options[:framework_versions]
+    framework_versions = JSON.parse(framework_version) if String === framework_versions
+    Ethics::FRAMEWORKS.collect do |framework| 
+      version = framework_versions[framework]
+      options.merge(framework: framework, framework_version: version)
+    end
+  end
+  extension :md
+  task :run_suite => :binary do
   end
 
 end
