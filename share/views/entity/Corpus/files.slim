@@ -13,18 +13,21 @@ ul.divide-y.divide-slate-200.bg-white.rounded-md.border.border-slate-200
           .min-w-0.flex-1
             .flex.items-center.gap-3
               a.link.link-primary[
-              hx-get=entity_url(doc_entity, :action, :preview) 
+              href=entity_url(doc_entity, :action, :preview) 
+              hx-boost="true"
               hx-swap="innerHTML"
               hx-target="##{id}"
               ]= doc
         .flex.items-center.gap-2.flex-shrink-0
           a.btn.btn-xs[
-            hx-get=entity_url(doc_entity, :action, :inline_edit)
+            href=entity_url(doc_entity, :action, :inline_edit)
+            hx-boost="true"
             hx-swap="innerHTML"
             hx-target="##{id}"
           ] Edit
-          button.btn.btn-xs.btn-outline.btn-error[
-            hx-get=entity_url(corpus, :property, :delete, args: [doc])
+          a.btn.btn-xs.btn-outline.btn-error[
+            href=entity_url(corpus, :property, :delete, args: [doc])
+            hx-boost="true"
             hx-confirm="Delete this document?"
             hx-swap='none'
           ] Delete

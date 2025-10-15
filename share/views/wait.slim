@@ -8,11 +8,29 @@
 - rescue
   - fullpath = "/"
 
-- update_url = add_GET_param fullpath, :_step, step.name
-- update_url = remove_GET_param update_url, :_update
+- wait_count ||= 0
+- wait_count = wait_count.to_i
+- wait_count += 1
 
-#wait-fragment[ hx-get=update_url hx-trigger="done" hx-swap="outerHTML" ]
-  #reloader[ hx-get=update_url hx-trigger="every 1s" hx-swap="none" ]
+- update_url = fullpath
+- update_url = remove_GET_param update_url, :_update
+- update_url = add_GET_param update_url, :_step, step.name
+- update_url = add_GET_param update_url, :wait_count, wait_count
+
+- if wait_count > 15
+  - time = 5
+- elsif wait_count > 10 
+  - time = 3
+- elsif wait_count > 5
+  - time = 2
+- elsif wait_count > 2
+  - time = 1
+- else
+  - time = 0.5
+
+#wait-fragment[ hx-get=remove_GET_param(update_url, :wait_count) hx-trigger="done" hx-swap="outerHTML" ]
+  /#reloader[ hx-get=update_url hx-trigger="every #{time}s once" hx-swap="outerHTML" ]
+  #reloader[ hx-get=update_url hx-trigger="load delay:#{time}s" hx-swap="outerHTML" hx-target='#wait-fragment' ]
     - workflow = step.workflow
     - task_name = step.task_name
     - name = step.name
@@ -25,6 +43,6 @@
       h3.text-l.font-semibold.mb-1 Waiting
 
     - if step.status
-      p.text-sm.text-slate-500.mt-0 
+      p.text-sm.text-slate-500.mt-0
         Status
         span.font-medium.ml-2= step.status

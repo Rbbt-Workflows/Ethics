@@ -1,3 +1,5 @@
+- add_checks user_file(:preferences).find
+
 h1.text-xl Frameworks
 
 section.mt-4
@@ -8,5 +10,5 @@ section.mt-4
         .card-body
           h2.card-title.font-semibold.text-xl= framework
           p.text-slate-500= framework.one_liner
+          - iii [framework, preferences]
           p.text-slate-500= get_preference(framework)
-

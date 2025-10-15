@@ -1,16 +1,20 @@
 - framework = entity
 - corpus = framework.corpus(version)
 - docs = corpus.documents
+- add_checks user_file(:preferences).find
 
 .tabs.tablist.tabs-lift.mb-10.w-full.flex role='tablist'
   input.tab type='radio' aria-label="Version #{version}" name='framework_controls'
-  .tab-content.p-6.bg-white.border-2.border-slate-200
-    ul.menu
-      - framework.versions.each do |version|
-        li.item.btn.btn-primary.btn-sm.mb-2
-          a(href=entity_url(framework, :entity, nil, version: version)) = version
-        li.item.btn.btn-primary.btn-sm.mb-2
-          a(hx-post=preference_url(framework, version)) activate
+  .tab-content.p-6.bg-white.border.border-slate-200
+    ul
+      - framework.versions.each do |v|
+        li.item.flex
+          - if v == version
+            a.btn.btn-disabled.btn-sm.mb-2.w-30(href=entity_url(framework, :entity, nil, version: v)) = v
+          - else
+            a.btn.btn-sm.mb-2.w-30(href=entity_url(framework, :entity, nil, version: v)) = v
+          - if preferences[framework] != '' && preferences[framework] == v
+            span.ml-4 active
 
   input.tab role='tab' type='radio' aria-label='Upload file' name='framework_controls'
   .tab-content.p-6.bg-white.border.border-slate-200
@@ -47,8 +51,8 @@
       legend.fieldset-legend Version name
       select.select name='source'
         option{ selected disabled } Choose version to clone
-        - framework.versions.each do |version|
-          option= version
+        - framework.versions.each do |v|
+          option= v
       input.input name='version' type='text' placeholder="copy_of_v1"
       button.btn.btn-primary.btn-sm#save-inline type="submit" Clone
 
@@ -64,8 +68,13 @@
     form hx-post=entity_url(framework, :property, :delete_version) hx-swap='none'
       select.select name='source'
         option{ disabled selected } Choose version to delete
-        - framework.versions.each do |version|
-          option= version
+        - framework.versions.each do |v|
+          option= v
       button.btn.btn-error.btn-sm#save-inline type="submit" Delete
 
+- active = preferences[framework] != '' && preferences[framework] == version
+- if active
+  h2.text-bold.my-4 Active version
+- else
+  a.btn.btn-primary.btn-sm.mb-2.w-30(hx-post=preference_url(framework, version) hx-swap='none') Activate
 == entity_fragment corpus, :action, :files, 'Corpus_add_document from:body, Corpus_delete, Document_save'

@@ -631,6 +631,12 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     sleep.slim
    }
    partial=partial{
+    header.slim
+    
+    header=header{
+     popover.slim
+    }
+
     markdown.slim
     entity_fragment.slim
    }

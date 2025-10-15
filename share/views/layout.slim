@@ -1,51 +1,45 @@
+- title ||= $title || "Scout"
 doctype html
-html lang="en" class="h-full bg-slate-50" data-theme="light"
+html.h-full.bg-slate-50 lang="en" data-theme="light"
   head
     meta charset="utf-8"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     meta name="csrf-token" content=csrf_token
     meta name="script_name" content=script_name
-    title Ethics Evaluation Agent
+
+    title = title
+
     link rel="preconnect" href="https://fonts.googleapis.com"
     link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"
     /link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"
 
+
+    script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"
+    == link_js "/plugins/hyperscript/hyperscript.js"
+
+    - record_css "/css/app.css"
+
     - record_js "/plugins/htmx/htmx.js"
     - record_js "/plugins/htmx/sse.js"
-    - record_js "/plugins/hyperscript/hyperscript.js"
-
     - record_js "/plugins/easymde/easymde.min.js"
     - record_css "/plugins/easymde/easymde.min.css"
 
     - record_js "/js/app.js"
-    - record_css "/css/custom.css"
 
     == serve_css
 
-  body class="h-full text-slate-900 min-h-screen flex flex-col"
-    header.bg-white.border-b.border-slate-200.sticky.top-0.z-30
-      .max-w-7xl.mx-auto.px-4
-        .flex.items-center.justify-between.h-16
-          a href="/" class="text-lg font-semibold text-indigo-600 hover:text-indigo-700" Ethics Agent
-          div class="hidden md:flex items-center gap-6"
-            a href="/main/frameworks" class="text-sm #{nav_active?('/main/frameworks') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Frameworks
-            a href="/main/use_cases" class="text-sm #{nav_active?('/main/use_cases') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" UseCases
-            a href="/main/prompts" class="text-sm #{nav_active?('/main/prompts') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Prompts
-            a href="/main/runs" class="text-sm #{nav_active?('/main/runs') ? 'text-indigo-600' : 'text-slate-600 hover:text-slate-900'}" hx-boost="true" Runs
-            a href="/auth/login" class="text-sm" hx-boost="true" Login
-            a.text-sm.text-slate-600.hover:text-slate-900 href=add_GET_param(fullpath, :_update, :reload) Reload
-            a.text-sm.text-slate-600.hover:text-slate-900 href=add_GET_param(fullpath, :_update, :css) CSS
-          .flex.items-center.gap-2
-            form action="#" method="get" class="relative"
-              input type="text" name="q" placeholder="Search..." class="rounded-md border-slate-300 text-sm pl-8"
-              span.absolute.left-2.top-1.5.text-slate-400.text-sm 🔎
+  body.flex.min-h-screen.flex-col.bg-base-100.text-base-content
+    == render_partial 'partial/header', title: title
 
-
-    main class="w-9/12 px-4 py-6 flex-1 m-auto"
+    main.flex-1.mx-auto.px-4.sm:px-6.lg:px-8.mt-8.container
       == yield
 
-    footer.border-t.border-slate-200.mt-12
-      .max-w-7xl.mx-auto.px-4.py-6.text-sm.text-slate-500
-        | © #{Time.now.year} Ethics Evaluation Agent
+    footer.footer.p-10.bg-base-200.text-base-content.mt-10
+      aside
+        - if ScoutRender.exists?('public/logo.svg')
+          img.h-8.w-auto src="/public/logo.svg" alt=""
+        p
+          | © #{Time.now.year} #{title}
 
     == serve_js
+
