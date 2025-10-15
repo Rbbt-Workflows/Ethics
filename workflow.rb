@@ -57,7 +57,7 @@ following these instructions:
 #{Scout.share.prompts[prompt_version].prepare.read}
 <instructions/>
 
-Please determine the list of files that need to be created
+Please determine the list of files that need to be created and return it as a json dictionary
     EOF
 
     dictionary = coordinator.json
@@ -69,10 +69,10 @@ The user wants to create documentation for the framework #{framework},
 following these instructions:
 
 <instructions>
-#{prompt}
+#{Scout.share.prompts[prompt_version].prepare.read}
 <instructions/>
     EOF
-    generator.option :previous_response_id, coordinator.get_previous_response_id
+    generator.option :previous_response_id, coordinator.get_previous_response_id if coordinator.get_previous_response_id
 
     dictionary.each do |file, description|
       generator.start unless %w(openai deep nano).include? endpoint

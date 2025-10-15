@@ -1,20 +1,30 @@
+- add_checks user_file(:preferences).find
+
 h2.text-2xl.font-semibold.flex.items-center.gap-3.mb-8
   | Prompts
 
+. hx-trigger="preference from:body" hx-get=fullpath hx-target="body" hx-swap='innerHTML'
 
 - versions = Prompt.versions
 - add_checks Prompt.prompts_dir
 - add_checks versions.collect{|v| Prompt.prompts_dir[v] }
 - add_checks versions.collect{|v| Prompt.prompts_dir[v].glob_all("*") }
-- version = versions.first unless defined?(version) && Prompt.versions.include?(version)
+- unless defined?(version) && Prompt.versions.include?(version)
+  - version = preference('prompt_version', versions.first)
+  - version = versions.first unless Prompt.versions.include?(version)
 
 .tabs.tablist.tabs-lift.mb-10.w-full.flex role='tablist'
   input.tab type='radio' aria-label="Version #{version}" name='prompt_controls'
   .tab-content.p-6.bg-white.border-2.border-slate-200
-    ul.menu
-      - versions.each do |version|
-        li.item.btn.btn-primary.btn-sm.mb-2
-          a(href=add_GET_param(fullpath, :version, version)) = version
+    ul
+      - versions.each do |v|
+        li.flex
+          - if v == version
+            a.btn.btn-disabled.btn-sm.mb-2.w-30(href=add_GET_param(fullpath, :version, v)) = v
+          - else
+            a.btn.btn-sm.mb-2.w-30(href=add_GET_param(fullpath, :version, v)) = v
+          - if preferences['prompt_version'] != '' && preferences['prompt_version'] == v
+            span.ml-4 active
 
   input.tab role='tab' type='radio' aria-label='Clone' name='prompt_controls'
   .tab-content.p-6.bg-white.border.border-slate-200
@@ -35,6 +45,12 @@ h2.text-2xl.font-semibold.flex.items-center.gap-3.mb-8
         - versions.each do |version|
           option= version
       button.btn.btn-error.btn-sm#save-inline type="submit" Delete
+
+- active = preferences['prompt_version'] != '' && preferences['prompt_version'] == version
+- if active
+  h2.text-bold.my-4 Active version
+- else
+  a.btn.btn-primary.btn-sm.mb-2.w-30(hx-post=preference_url('prompt_version', version) hx-swap='none') Activate
 
 ul.mt-4.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-4
   - %w(coordinator generator evaluator prepare).each do |role|

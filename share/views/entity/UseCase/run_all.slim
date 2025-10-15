@@ -1,0 +1,21 @@
+
+- add_checks user_file(:preferences).find
+
+- use_case = entity
+- jobs = {}
+- prompt_version = preferences['prompt_version']
+- raise "Please configure an active version for the collection of prompts" if prompt_version.nil?
+- Ethics::FRAMEWORKS.each do |framework|
+  - endpoint = :relay
+  - framework_version = preferences[framework]
+  - raise "Please configure an active version for framework #{framework}" if framework_version.nil?
+  - jobs[framework] = framework.evaluate_use_case_job use_case, framework_version, prompt_version, endpoint
+- jobs.values.each_with_index{|job,i| log Misc.snake_case(job.inputs[:framework]); job.produce }
+
+.tabs.tablist.tabs-lift.mb-10.w-full.flex role='tablist'
+  - jobs.each do |framework, job|
+    - version = job.inputs[:framework_version]
+    input.tab type='radio' aria-label="#{framework} (#{version})" name='framework_controls'
+    .tab-content.p-6.bg-white.border.border-slate-200
+      == render_partial 'partial/markdown', markdown: job.load
+
