@@ -89,7 +89,11 @@ class EthicsApp < Sinatra::Base
   #  headers['HX-Trigger'] = triggers * ", "
   #end
 
-    
+  before do
+    protected! if fullpath.include?('entity')
+    protected! if fullpath.include?('main')
+  end
+
   # Dashboard (placeholder)
   get "/" do
     redirect "/main/frameworks"
