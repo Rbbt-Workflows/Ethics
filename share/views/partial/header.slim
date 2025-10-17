@@ -1,0 +1,113 @@
+- title ||= $title || "Scout"
+
+- main_nav = {} 
+- reload_nav = {}
+- nav = {} 
+
+- ScoutRender.root.main.glob_all("*").select{|f| !f.directory? }.collect{|f| f.unset_extension.split("/main/").last }.uniq.each do |name|
+  - url = "/main/#{name}"
+  - main_nav[Misc.humanize(name)] = url
+
+- nav['Frameworks'] = '/main/frameworks'
+- nav['Prompts'] = '/main/prompts'
+- nav['Use cases'] = '/main/use_cases'
+
+- nav['Template'] = add_GET_param(fullpath, :_update, :reload)
+- nav['Clean'] = add_GET_param(fullpath, :_update, :clean)
+- nav['CSS'] = add_GET_param(fullpath, :_update, :css)
+- nav['JS'] = add_GET_param(fullpath, :_update, :js)
+
+/ Include this script tag or install `@tailwindplus/elements` via npm:
+
+header.bg-base-200
+  nav.mx-auto.flex.max-w-7xl.items-center.justify-between.p-6.lg:px-8 aria-label="Global"
+    .flex.lg:flex-1
+      a.-m-1.5.p-1.5 href="/"
+        - if ScoutRender.exists?('public/logo.svg')
+          span.sr-only = title
+          img.h-8.w-auto src="/public/logo.svg" alt=""
+        - else
+          span.text-lg.font-semibold = title
+    .flex.lg:hidden
+      button.-m-2.5.inline-flex.items-center.justify-center.rounded-md.p-2.5.text-gray-700 type="button" command="show-modal" commandfor="mobile-menu"
+        span.sr-only Open main menu
+        svg.size-6 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true"
+          path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+
+    el-popover-group.hidden.lg:flex.lg:gap-x-12
+      - if main_nav.any?
+        .relative
+          == render_partial "partial/header/popover", title: 'Main', nav: main_nav
+
+      - if reload_nav.any?
+        .relative
+          == render_partial "partial/header/popover", title: 'Reload', nav: reload_nav
+
+      - nav.each do |item, url|
+        a.text-sm/6.font-semibold.text-gray-900 href=url = item
+    .hidden.lg:flex.lg:flex-1.lg:justify-end
+      - if authenticated?
+        .dropdown.dropdown-end
+          - img_url = (current_user[:image] || current_user['image'] rescue nil)
+          - uname = user_name || "User"
+          - email = current_user[:email] || current_user['email']
+          /avatar.size-6 src=img_url alt=uname
+          label.btn.btn-ghost.btn-circle.avatar tabindex="0"
+            .w-8.rounded-full
+              - if img_url
+                img src=img_url alt=uname
+              - else
+                .bg-primary.text-primary-content.flex.items-center.justify-center.w-full.h-full.rounded-full.text-xs.font-semibold = uname[0,1]
+          ul.menu.menu-sm.dropdown-content.mt-3.p-2.shadow.bg-base-100.rounded-box.w-56 class="z-[1]"
+            li
+              a href="/debug_session"
+                span.font-semibold= uname
+              - if email && email != uname
+                span.text-xs.text-base-400= email
+            li
+              a href="/auth/logout" Logout
+      - else
+        a.text-sm/6.font-semibold.text-gray-900 href="/auth/login"
+          | Log in 
+        span aria-hidden="true" &rarr;
+
+  el-dialog
+    dialog#mobile-menu.backdrop:bg-transparent.lg:hidden
+      div.fixed.inset-0 tabindex="0" focus:outline="none"
+        el-dialog-panel.fixed.inset-y-0.right-0.z-50.w-full.overflow-y-auto.bg-white.p-6.sm:max-w-sm.sm:ring-1.sm:ring-gray-900/10
+          .flex.items-center.justify-between
+            a.-m-1.5.p-1.5 href="#"
+              - if ScoutRender.exists?('public/logo.svg')
+                span.sr-only = title
+                img.h-8.w-auto src="/public/logo.svg" alt=""
+              - else
+                span.text-lg.font-semibold = title
+            button.-m-2.5.rounded-md.p-2.5.text-gray-700 type="button" command="close" commandfor="mobile-menu"
+              span.sr-only Close menu
+              svg.size-6 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true"
+                path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"
+
+          .mt-6.flow-root
+            .-my-6.divide-y.divide-gray-500/10
+              .space-y-2.py-6
+                - if main_nav.any?
+                  .-mx-3
+                    == render_partial "partial/header/mobile_menu", title: 'Main', nav: main_nav
+
+                - if reload_nav.any?
+                  .-mx-3
+                    == render_partial "partial/header/mobile_menu", title: 'Reload', nav: reload_nav
+
+                - nav.each do |item, url|
+                  a.-mx-3.block.rounded-lg.px-3.py-2.text-base/7.font-semibold.text-gray-900.hover:bg-gray-50 href=url = item
+              .py-6
+                - if authenticated?
+                  - img_url = (current_user[:image] || current_user['image'] rescue nil)
+                  - uname = user_name || "User"
+                  - email = current_user[:email] || current_user['email']
+                  .-mx-3
+                    == render_partial "partial/header/mobile_menu", title: uname , nav: {logout: "/auth/logout"}
+                - else
+                  a.-mx-3.block.rounded-lg.px-3.py-2.5.text-base/7.font-semibold.text-gray-900.hover:bg-gray-50 href="/auth/login"
+                    | Log in
+                    span aria-hidden="true" &rarr;

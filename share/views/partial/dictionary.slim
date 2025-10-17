@@ -1,0 +1,6 @@
+dl.divide-y.divide-base-200.rounded-lg.shadow-sm.bg-base-100.p-4
+  - dictionary.each do |key,value|
+    .py-2.flex.justify-between
+      dt.text-xs.font-medium.text-base-content/60.mr-4 = key
+      - value = value.round(2) if Float === value
+      dd.text-sm = value
