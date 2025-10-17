@@ -658,6 +658,7 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     }
     UseCase.slim
     UseCase=UseCase{
+     run_all.slim
      run.slim
      description.slim
      new.slim
@@ -676,7 +677,7 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    }
    public=public filter="*"{
     css=css{
-     custom.css
+     app.css
     }
     js=js{
      app.js
