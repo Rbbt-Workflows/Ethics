@@ -12,10 +12,39 @@
   - jobs[framework] = framework.evaluate_use_case_job use_case, framework_version, prompt_version, endpoint
 - jobs.values.each_with_index{|job,i| log Misc.snake_case(job.inputs[:framework]); job.produce }
 
-.tabs.tablist.tabs-lift.mb-10.w-full.flex role='tablist'
-  - jobs.each do |framework, job|
-    - version = job.inputs[:framework_version]
-    input.tab type='radio' aria-label="#{framework} (#{version})" name='framework_controls'
-    .tab-content.p-6.bg-white.border.border-slate-200
-      == render_partial 'partial/markdown', markdown: job.load
+- first_framework = jobs.keys.first
+
+javascript:
+  function showFramework(framework) {
+    // Hide all content panels
+    document.querySelectorAll('.framework-content').forEach(el => el.classList.add('hidden'));
+    // Show selected panel
+    document.getElementById('framework-' + framework.replace(/\s+/g, '-')).classList.remove('hidden');
+    // Update active state in menu
+    document.querySelectorAll('.framework-menu-item').forEach(el => el.classList.remove('active'));
+    document.querySelector('[data-framework="' + framework + '"]').classList.add('active');
+  }
+
+/ Responsive layout: vertical on mobile, horizontal with sidebar on larger screens
+.flex.flex-col.lg:flex-row.gap-4
+  / Sidebar menu - stacks vertically on mobile, fixed width on desktop
+  .flex-shrink-0
+    ul.menu.bg-base-200.rounded-box.p-2.flex.flex-row.flex-grow.lg:flex-col
+      - jobs.each do |framework, job|
+        - version = job.inputs[:framework_version]
+        - is_first = framework == first_framework
+        li
+          a.text-sm.framework-menu-item.block(onclick="showFramework('#{framework}'); return false;" data-framework=framework class=(is_first ? 'active' : ''))
+            span.block.blo.font-semibold= framework
+            span.block.text-xs.opacity-70= version
+
+  / Content area - takes remaining space
+  .min-w-0.w-auto.overflow-auto
+    - jobs.each do |framework, job|
+      - is_first = framework == first_framework
+
+      .card.bg-white.border.border-slate-200.shadow-sm.framework-content(id="framework-#{framework.gsub(/\s+/, '-')}" class=(is_first ? '' : 'hidden'))
+        .card-body.p-6
+          h3.card-title.mb-4= "#{framework} Evaluation"
+          == render_partial 'partial/markdown', markdown: job.load
 
