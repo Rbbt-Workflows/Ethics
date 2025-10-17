@@ -3,6 +3,7 @@ require 'scout-ai'
 
 Misc.add_libdir if __FILE__ == $0
 require 'entity/framework'
+require 'entity/corpus'
 
 #require 'rbbt/sources/MODULE'
 
@@ -61,6 +62,8 @@ Please determine the list of files that need to be created and return it as a js
     EOF
 
     dictionary = coordinator.json
+
+    set_info :dictionary, dictionary.to_json
 
     generator = LLM.agent endpoint: endpoint
     generator.start_chat.system Scout.share.prompts[prompt_version].generator.find
