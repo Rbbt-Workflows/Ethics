@@ -1,0 +1,26 @@
+- action = nil if action.nil?
+- hx_post = nil if hx_post.nil?
+- hx_target = nil if hx_target.nil?
+- method = 'POST' if method.nil?
+- inputs = [] if inputs.nil?
+- types =  IndiferentHash.setup(types || {})
+- descriptions =  IndiferentHash.setup(descriptions || {})
+- defaults =  IndiferentHash.setup(defaults || {})
+- options =  IndiferentHash.setup(options || {})
+
+form action=action hx-post=hx_post hx-target= hx_target method=method enctype="multipart/form-data"
+  .fieldset.mb-4
+    - inputs.each do |input|
+      - description = descriptions[input]
+      - type = types[input] || 'input'
+      - input_options = options[input] || {}
+
+      - label = input
+      - default = defaults[input]
+      - value = locals[input].nil? ? default : locals[input]
+
+      == render_partial 'partial/form/input', input: input, description: description, type: type, input_options: input_options, label: label, default: default, value: value, options: options
+
+
+
+  input.btn type="submit"
