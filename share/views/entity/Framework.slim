@@ -5,7 +5,7 @@
 h2.text-2xl.font-semibold.flex.items-center.gap-3.mb-8
   = framework
 
-sass:
+/sass:
   .editor-preview-full
     height: 100%
   .viewer
@@ -21,6 +21,6 @@ sass:
   - version = preference(framework, framework.versions.first)
   - version = framework.versions.first unless framework.versions.include?(version)
 
-== entity_fragment framework, :action, :corpora, 'prepare_job, delete_version, new_version, clone_version, prepare_version_done, preference', version: version
+== entity_fragment framework, :action, :corpora, 'prepare_job, delete, delete_version, new_version, clone_version, prepare_version_done, preference', version: version
 
 == entity_fragment framework, :action, :use_cases, '', version: version

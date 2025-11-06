@@ -15,6 +15,7 @@ ul.divide-y.divide-slate-200.bg-white.rounded-md.border.border-slate-200
               a.link.link-primary[
               href=entity_url(doc_entity, :action, :preview) 
               hx-boost="true"
+              hx-push-url='false'
               hx-swap="innerHTML"
               hx-target="##{id}"
               ]= doc
@@ -22,12 +23,14 @@ ul.divide-y.divide-slate-200.bg-white.rounded-md.border.border-slate-200
           a.btn.btn-xs[
             href=entity_url(doc_entity, :action, :inline_edit)
             hx-boost="true"
+            hx-push-url='false'
             hx-swap="innerHTML"
             hx-target="##{id}"
           ] Edit
           a.btn.btn-xs.btn-outline.btn-error[
             href=entity_url(corpus, :property, :delete, args: [doc])
             hx-boost="true"
+            hx-push-url='false'
             hx-confirm="Delete this document?"
             hx-swap='none'
           ] Delete

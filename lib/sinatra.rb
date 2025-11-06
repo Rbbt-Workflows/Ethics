@@ -90,13 +90,14 @@ class EthicsApp < Sinatra::Base
   #end
 
   before do
+    content_type :html, 'charset' => 'utf-8'
     protected! if fullpath.include?('entity')
     protected! if fullpath.include?('main')
   end
 
   # Dashboard (placeholder)
   get "/" do
-    redirect "/main/frameworks"
+    redirect to("/main/frameworks")
   end
 
 

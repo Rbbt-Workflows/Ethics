@@ -10,7 +10,7 @@ require 'entity/corpus'
 module Ethics
   extend Workflow
 
-  FRAMEWORKS = Framework.setup Scout.share.corpora.glob_names("*")
+  FRAMEWORKS = Framework.setup Scout.data.frameworks.list
   ENDPOINTS = Scout.etc.AI.glob('*').collect{|f| f.basename }
 
   input :use_case, :text, 'Description of use case to evaluate', nil, required:true 
@@ -48,7 +48,7 @@ Use case:
   input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
   task :prepare => :array do |framework,prompt_version,endpoint|
 
-    coordinator = LLM.agent
+    coordinator = LLM.agent endpoint: endpoint
     coordinator.system Scout.share.prompts[prompt_version].coordinator.find
     coordinator.user <<-EOF
 The user wants to create documentation for the framework #{framework},

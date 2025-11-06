@@ -4,6 +4,9 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
  tailwind.config.js
  postcss.config.js
  package.json
+ data=data{
+  frameworks.list
+ }
  chats=chats filter="*"{
   select
 
