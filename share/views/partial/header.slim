@@ -6,16 +6,16 @@
 
 - ScoutRender.root.main.glob_all("*").select{|f| !f.directory? }.collect{|f| f.unset_extension.split("/main/").last }.uniq.each do |name|
   - url = "/main/#{name}"
-  - main_nav[Misc.humanize(name)] = url
+  - nav[Misc.humanize(name)] = url
 
 - nav['Frameworks'] = '/main/frameworks'
 - nav['Prompts'] = '/main/prompts'
 - nav['Use cases'] = '/main/use_cases'
 
-- nav['Template'] = add_GET_param(fullpath, :_update, :reload)
-- nav['Clean'] = add_GET_param(fullpath, :_update, :clean)
-- nav['CSS'] = add_GET_param(fullpath, :_update, :css)
-- nav['JS'] = add_GET_param(fullpath, :_update, :js)
+- reload_nav['Template'] = add_GET_param(fullpath, :_update, :reload)
+- reload_nav['Clean'] = add_GET_param(fullpath, :_update, :clean)
+- reload_nav['CSS'] = add_GET_param(fullpath, :_update, :css)
+- reload_nav['JS'] = add_GET_param(fullpath, :_update, :js)
 
 / Include this script tag or install `@tailwindplus/elements` via npm:
 
@@ -39,12 +39,13 @@ header.bg-base-200
         .relative
           == render_partial "partial/header/popover", title: 'Main', nav: main_nav
 
+      - nav.each do |item, url|
+        a.text-sm/6.font-semibold.text-gray-900 href=url = item
+
       - if reload_nav.any?
         .relative
           == render_partial "partial/header/popover", title: 'Reload', nav: reload_nav
 
-      - nav.each do |item, url|
-        a.text-sm/6.font-semibold.text-gray-900 href=url = item
     .hidden.lg:flex.lg:flex-1.lg:justify-end
       - if authenticated?
         .dropdown.dropdown-end
