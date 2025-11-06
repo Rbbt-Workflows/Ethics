@@ -1,0 +1,44 @@
+
+- description = nil if description.nil?
+- type = 'input' if type.nil?
+- label = input if label.nil?
+- value = nil if value.nil?
+
+legend.fieldset-legend title=description = label
+
+- case type.to_s
+- when 'input', 'string', 'integer', 'float'
+  input.input type=type name=input value=value
+- when 'select'
+  - if input_options[:select_options]
+    select.input name=input 
+      - input_options[:select_options].each do |name,desc=nil|
+        - desc = name if desc.nil?
+        option value=name selected=(name == locals[input]) = desc
+  - else
+    input.input type=type name=input value=value = content
+- when 'boolean'
+    input type='hidden' value='false' name=input
+    label.label
+      input.checkbox type='checkbox' checked=(value && value != 'false') name=input
+- when 'array'
+  - if input_options[:select_options]
+    select.select name="#{input}[]" multiple=true
+      option disabled=true Select any number
+      - input_options[:select_options].each do |name,desc=nil|
+        - desc = name if desc.nil?
+        option value=name selected=((Array === value) && value.include?(name)) = desc
+  - else
+    textarea.input type=type name=input value=value = content
+- when 'text'
+  .form-control.w-full
+    .label
+      span.label-text.font-semibold Upload a file or write in the text-area
+    .fieldset
+      input.file-input.file-input-bordered.w-full type="file" name="#{input}_upload_file" accepts=options[:accepts]
+    textarea.textarea.textarea-bordered.w-full.h-40 name=input placeholder="Paste your text here..." = value
+- when 'hidden'
+  .label
+    span.label-text.font-semibold = value
+  input.input type="hidden" name=input value=value
+
