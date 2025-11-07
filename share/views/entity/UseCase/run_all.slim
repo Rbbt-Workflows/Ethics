@@ -6,7 +6,7 @@
 - prompt_version = preferences['prompt_version']
 - raise "Please configure an active version for the collection of prompts" if prompt_version.nil?
 - Ethics::FRAMEWORKS.each do |framework|
-  - endpoint = :relay
+  - endpoint = :nano
   - framework_version = preferences[framework]
   - raise "Please configure an active version for framework #{framework}" if framework_version.nil?
   - jobs[framework] = framework.evaluate_use_case_job use_case, framework_version, prompt_version, endpoint
@@ -16,11 +16,8 @@
 
 javascript:
   function showFramework(framework) {
-    // Hide all content panels
     document.querySelectorAll('.framework-content').forEach(el => el.classList.add('hidden'));
-    // Show selected panel
-    document.getElementById('framework-' + framework.replace(/\s+/g, '-')).classList.remove('hidden');
-    // Update active state in menu
+    document.getElementById('framework-' + framework.replace(' ', '-')).classList.remove('hidden');
     document.querySelectorAll('.framework-menu-item').forEach(el => el.classList.remove('active'));
     document.querySelector('[data-framework="' + framework + '"]').classList.add('active');
   }
