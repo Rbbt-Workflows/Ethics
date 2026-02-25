@@ -45,18 +45,21 @@ Use case:
 
   input :framework, :select, 'Framework to apply', nil, select_options: FRAMEWORKS
   input :prompt_version, :select, 'Prompt version to use', nil, required: true
-  input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
+  input :endpoint, :select, 'Endpoint to user for inference', :nano, select_options: ENDPOINTS
   task :prepare => :array do |framework,prompt_version,endpoint|
 
     coordinator = LLM.agent endpoint: endpoint
-    coordinator.system Scout.share.prompts[prompt_version].coordinator.find
+    coordinator.import Scout.share.prompts[prompt_version].files.find
+
+    instructions_file = Scout.share.prompts[prompt_version].instructions
+
     coordinator.user <<-EOF
 The user wants to create documentation for the framework #{framework},
 following these instructions:
 
 <instructions>
-#{Scout.share.prompts[prompt_version].prepare.read}
-<instructions/>
+#{instructions_file.read}
+</instructions>
 
 Please determine the list of files that need to be created and return it as a json dictionary
     EOF
@@ -65,15 +68,15 @@ Please determine the list of files that need to be created and return it as a js
 
     set_info :dictionary, dictionary.to_json
 
-    generator = LLM.agent endpoint: endpoint
+    generator = LLM.agent endpoint: endpoint, websearch: true
     generator.start_chat.system Scout.share.prompts[prompt_version].generator.find
     generator.start_chat.user <<-EOF
 The user wants to create documentation for the framework #{framework},
 following these instructions:
 
 <instructions>
-#{Scout.share.prompts[prompt_version].prepare.read}
-<instructions/>
+#{instructions_file.read}
+</instructions>
     EOF
     generator.option :previous_response_id, coordinator.get_previous_response_id if coordinator.get_previous_response_id
 

@@ -712,13 +712,18 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    }
   }
 
-  prompts=prompts{
+  prompts=prompts filter="*"{
    v1=v1{
     coordinator
-    generator
     evaluator
-
+    generator
     prepare
+   }
+   v2=v2{
+    intro
+    files
+    instructions
+    generator
    }
   }
  }
