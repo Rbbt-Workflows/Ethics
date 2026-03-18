@@ -17,7 +17,7 @@ module Ethics
   input :framework, :select, 'Framework to apply', nil, select_options: FRAMEWORKS
   input :framework_version, :select, 'Framework version to use', nil, required: true
   input :prompt_version, :select, 'Prompt version to use', nil, required: true
-  input :endpoint, :select, 'Endpoint to user for inference', :openai, select_options: ENDPOINTS
+  input :endpoint, :select, 'Endpoint to user for inference', :default, select_options: ENDPOINTS
   task :evaluate => :text do |use_case,framework,framework_version,prompt_version,endpoint|
     framework = Framework.setup(framework)
 
