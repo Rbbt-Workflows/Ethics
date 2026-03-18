@@ -1,18 +1,26 @@
-
 - add_checks user_file(:preferences).find
 
 - use_case = entity
-- jobs = {}
-- prompt_version = preferences['prompt_version']
-- raise "Please configure an active version for the collection of prompts" if prompt_version.nil?
-- Ethics::FRAMEWORKS.each do |framework|
-  - endpoint = :nano
-  - framework_version = preferences[framework]
-  - raise "Please configure an active version for framework #{framework}" if framework_version.nil?
-  - jobs[framework] = framework.evaluate_use_case_job use_case, framework_version, prompt_version, endpoint
-- jobs.values.each_with_index{|job,i| log Misc.snake_case(job.inputs[:framework]); job.produce }
 
-- first_framework = jobs.keys.first
+- prompt_version = preferences['prompt_version']
+- prompt_version = Prompt.versions.first if prompt_version.nil?
+- raise "Please configure an active version for the collection of prompts" if prompt_version.nil?
+- framework_versions = {}
+- Ethics::FRAMEWORKS.each do |framework|
+  - framework_version = preferences[framework]
+  - framework_version = framework.versions.first if framework_version.nil?
+  - raise "Please configure an active version for framework #{framework}" if framework_version.nil?
+  - framework_versions[framework] = framework_version
+
+
+- job = Ethics.job(:final_report, prompt_version: prompt_version, framework_versions: framework_versions, use_case: use_case)
+- Workflow.produce(job)
+- jobs = job.rec_dependencies.select{|dep| dep.task_name.to_sym == :evaluate }
+- first_framework = jobs.first.recursive_inputs[:framework]
+
+.summary
+  == render_partial 'partial/markdown', markdown: job.load
+
 
 javascript:
   function showFramework(framework) {
@@ -23,11 +31,12 @@ javascript:
   }
 
 / Responsive layout: vertical on mobile, horizontal with sidebar on larger screens
-.flex.flex-col.lg:flex-row.gap-4
+.flex.flex-col.lg:flex-row.gap-4.mt-8.sections
   / Sidebar menu - stacks vertically on mobile, fixed width on desktop
   .flex-shrink-0
     ul.menu.bg-base-200.rounded-box.p-2.flex.flex-row.flex-grow.lg:flex-col
-      - jobs.each do |framework, job|
+      - jobs.each do |job|
+        - framework = job.recursive_inputs[:framework]
         - version = job.inputs[:framework_version]
         - is_first = framework == first_framework
         li
@@ -37,7 +46,8 @@ javascript:
 
   / Content area - takes remaining space
   .min-w-0.w-auto.overflow-auto
-    - jobs.each do |framework, job|
+    - jobs.each do |job|
+      - framework = job.recursive_inputs[:framework]
       - is_first = framework == first_framework
 
       .card.bg-white.border.border-slate-200.shadow-sm.framework-content(id="framework-#{framework.gsub(/\s+/, '-')}" class=(is_first ? '' : 'hidden'))

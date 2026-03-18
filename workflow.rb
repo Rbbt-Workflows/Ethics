@@ -118,7 +118,27 @@ The content description of the file is:
     end
   end
   extension :md
-  task :run_suite => :binary do
+  task :run_suite => :array do
+    dependencies
+  end
+
+  dep :run_suite
+  input :prompt_version, :select, 'Prompt version to use', nil, required: true
+  extension :chat
+  task :final_report => :text do |prompt_version|
+    agent = LLM.agent
+    agent.system Scout.share.prompts[prompt_version].synthesis.read
+    rec_dependencies.each do |dep|
+      next unless dep.task_name == :evaluate
+
+      agent.file dep.path
+    end
+
+    agent.user <<-EOF
+Synthesize the content in the files above.
+    EOF
+
+    agent.chat
   end
 
 end

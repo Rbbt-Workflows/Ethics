@@ -53,8 +53,9 @@ h2.text-2xl.font-semibold.flex.items-center.gap-3.mb-8
   a.btn.btn-primary.btn-sm.mb-2.w-30(hx-post=preference_url('prompt_version', version) hx-swap='none') Activate
 
 ul.mt-4.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-4
-  - %w(coordinator generator evaluator prepare).each do |role|
+  - %w(coordinator generator evaluator prepare synthesis).each do |role|
     - prompt = Prompt.setup [role, version] * "·"
+    - next unless prompt.file.exists?
     li.card.bg-base-100.border.border-slate-200.shadow-sm
       a href= entity_url(prompt, :entity)
         .card-body
