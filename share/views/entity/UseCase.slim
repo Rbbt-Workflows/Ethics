@@ -5,6 +5,7 @@
   .flex.items-center.gap-2
     a.btn.btn-sm.btn-outline href=entity_url(use_case, :action, :edit) Edit
     a.btn.btn-sm.btn-ghost href="/main/use_cases" Back
+    a.btn.btn-sm.btn-outline href=entity_url(use_case, :action, :run_all) Run
 
 .prose.max-w-none.mb-8
   == Kramdown::Document.new(use_case.description).to_html
