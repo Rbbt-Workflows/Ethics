@@ -14,8 +14,8 @@
 
 
 - job = Ethics.job(:final_report, prompt_version: prompt_version, framework_versions: framework_versions, use_case: use_case)
-- Workflow.produce(job)
 - jobs = job.rec_dependencies.select{|dep| dep.task_name.to_sym == :evaluate }
+- Workflow.produce(job, bar: @step.progress_bar("Preparing report")) unless job.running?
 - first_framework = jobs.first.recursive_inputs[:framework]
 
 .summary
@@ -37,7 +37,7 @@ javascript:
     ul.menu.bg-base-200.rounded-box.p-2.flex.flex-row.flex-grow.lg:flex-col
       - jobs.each do |job|
         - framework = job.recursive_inputs[:framework]
-        - version = job.inputs[:framework_version]
+        - version = job.recursive_inputs[:framework_version]
         - is_first = framework == first_framework
         li
           a.text-sm.framework-menu-item.block(onclick="showFramework('#{framework}'); return false;" data-framework=framework class=(is_first ? 'active' : ''))
