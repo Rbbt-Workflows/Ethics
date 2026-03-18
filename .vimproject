@@ -1,12 +1,5 @@
 Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.sass *.txt *.conf" {
  workflow.rb
- config.ru
- tailwind.config.js
- postcss.config.js
- package.json
- data=data{
-  frameworks.list
- }
  chats=chats filter="*"{
   select
 
@@ -662,6 +655,7 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
     UseCase.slim
     UseCase=UseCase{
      run_all.slim
+     run_all-old.slim
      run.slim
      description.slim
      new.slim
@@ -727,4 +721,11 @@ Ethics=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.slim *.s
    }
   }
  }
+ data=data{
+  frameworks.list
+ }
+ config.ru
+ tailwind.config.js
+ postcss.config.js
+ package.json
 }
