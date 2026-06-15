@@ -23,7 +23,7 @@ module Ethics
 
     agent = LLM.agent endpoint: endpoint
     
-    agent.system Scout.share.prompts[prompt_version].evaluator.find
+    agent.system Scout.share.prompts[prompt_version].evaluator.read
 
     agent.directory framework.corpus_dir(framework_version)
 
